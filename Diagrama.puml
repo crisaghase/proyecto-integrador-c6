@@ -1,0 +1,51 @@
+@startuml
+annotation java.lang.Override
+class code.CategoriaProducto
+class code.Cliente
+class code.DetalleVenta
+class code.Producto
+class code.Usuario
+class code.Venta
+class java.sql.Connection
+class java.sql.PreparedStatement
+class java.sql.ResultSet
+class java.sql.SQLException
+class java.sql.Statement
+class java.util.Random
+class javax.swing.JOptionPane
+class sql.BaseQuery
+class sql.C_Categoria
+class sql.C_Cliente
+class sql.C_Producto
+class sql.C_Usuario
+class sql.C_Ventas
+class sql.Conexion
+interface sql.IQueryDatos
+interface sql.IQueryEliminar
+sql.BaseQuery ..> java.lang.Override
+sql.BaseQuery --|> sql.IQueryDatos
+sql.BaseQuery --|> sql.IQueryEliminar
+sql.C_Categoria ..> code.CategoriaProducto
+sql.C_Categoria ..> java.sql.Connection
+sql.C_Categoria ..> java.sql.PreparedStatement
+sql.C_Categoria ..> java.sql.SQLException
+sql.C_Categoria --|> sql.BaseQuery
+sql.C_Cliente ..> code.Cliente
+sql.C_Cliente ..> java.sql.Connection
+sql.C_Cliente ..> java.sql.PreparedStatement
+sql.C_Cliente ..> java.sql.SQLException
+sql.C_Cliente --|> sql.BaseQuery
+sql.C_Producto ..> code.Producto
+sql.C_Producto --|> sql.BaseQuery
+sql.C_Usuario ..> code.Usuario
+sql.C_Usuario ..> javax.swing.JOptionPane
+sql.C_Usuario --|> sql.BaseQuery
+sql.C_Ventas ..> code.DetalleVenta
+sql.C_Ventas ..> code.Venta
+sql.C_Ventas ..> java.sql.Connection
+sql.C_Ventas ..> java.sql.PreparedStatement
+sql.C_Ventas ..> java.sql.ResultSet
+sql.C_Ventas ..> java.sql.SQLException
+sql.C_Ventas ..> java.sql.Statement
+sql.C_Ventas ..> java.util.Random
+@enduml
