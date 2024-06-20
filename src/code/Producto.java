@@ -3,24 +3,27 @@ package code;
 public class Producto {
     private String codigo;
     private String nombre;
-    private String descripcion;
     private int stock;
     private double precio;
     private String categoria;
+    private String proveedor;
+    private int vencimiento;
+    
     
     public Producto(){
         
     }
-    
-    public Producto(String codigo, String nombre, String descripcion, int sotck, double precio, String categoria) {
+
+    public Producto(String codigo, String nombre, int stock, double precio, String categoria, String proveedor, int vencimiento) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.stock = sotck;
+        this.stock = stock;
         this.precio = precio;
         this.categoria = categoria;
+        this.proveedor = proveedor;
+        this.vencimiento = vencimiento;
     }
-
+    
     public String getCodigo() {
         return codigo;
     }
@@ -35,14 +38,6 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public int getStock() {
@@ -68,4 +63,21 @@ public class Producto {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+
+    public int getVencimiento() {
+        return vencimiento;
+    }
+
+    public void setVencimiento(int vencimiento) {
+        this.vencimiento = vencimiento;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
+    }
+    
 }
