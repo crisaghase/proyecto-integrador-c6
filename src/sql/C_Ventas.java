@@ -4,10 +4,7 @@ import code.DetalleVenta;
 import code.Venta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Random;
 
 public class C_Ventas {
     
@@ -55,33 +52,5 @@ public class C_Ventas {
         }
 
         return estado;
-    }
-    
-    public static String generarCodigo() {
-        String codigoGeneradoVenta;
-        Random random = new Random();
-
-        do {
-            int numero = random.nextInt(10000);
-            codigoGeneradoVenta = "C" + String.format("%04d", numero);
-        } while (codigoExistenteEnBaseDeDatos(codigoGeneradoVenta));
-
-        return codigoGeneradoVenta;
-    }
-    
-    public static boolean codigoExistenteEnBaseDeDatos(String codigo) {
-        try {
-            Connection c = Conexion.Conectar();
-            Statement st = c.createStatement();
-            String sql = "Select count(*) from TB_DetalleVenta Where codigo_ven = '" + codigo + "'";
-            ResultSet rs = st.executeQuery(sql);
-            rs.next();
-            int count = rs.getInt(1);
-
-            return count > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 }
