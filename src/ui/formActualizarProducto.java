@@ -13,6 +13,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
 
     String codigoProducto = "";
     int stock = 0;
+    private String codigoCategoria;
 
     public formActualizarProducto() {
         initComponents();
@@ -24,38 +25,33 @@ public class formActualizarProducto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnActualizar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cbxProductos = new javax.swing.JComboBox<>();
-        txtAgregarStock = new javax.swing.JTextField();
-        txtStockActual = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        cbxCategoria = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        cbxProveedor = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        txtTiempo = new javax.swing.JTextField();
+        cbxTiempo = new javax.swing.JComboBox<>();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(139, 120, 162));
 
-        btnActualizar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(139, 120, 162));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Actualizar Stock");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
-        jLabel2.setText("Agregar:");
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
-        jLabel3.setText("Actual:");
-
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Producto:");
 
-        cbxProductos.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cbxProductos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,58 +59,114 @@ public class formActualizarProducto extends javax.swing.JFrame {
             }
         });
 
-        txtAgregarStock.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Categoría :");
 
-        txtStockActual.setEditable(false);
-        txtStockActual.setBackground(new java.awt.Color(102, 102, 102));
-        txtStockActual.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cbxCategoria.setEditable(true);
+        cbxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Proveedor :");
+
+        cbxProveedor.setEditable(true);
+        cbxProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Tiempo de vencimiento :");
+
+        cbxTiempo.setEditable(true);
+        cbxTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Mes" }));
+
+        btnActualizar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(72, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(111, 111, 111))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(30, 30, 30)
+                                .addComponent(cbxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel14)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cbxTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(19, 19, 19))))
+                        .addGap(53, 53, 53))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(149, 149, 149))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtStockActual)
-                            .addComponent(cbxProductos, 0, 231, Short.MAX_VALUE)
-                            .addComponent(txtAgregarStock))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 119, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(111, 111, 111))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cbxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtStockActual))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtAgregarStock))
-                .addGap(47, 47, 47)
-                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -122,12 +174,11 @@ public class formActualizarProducto extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        actualizarStock();
+        actualizarProducto();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void cbxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductosActionPerformed
         // TODO add your handling code here:
-        cargarStockProductoSeleccionado();
     }//GEN-LAST:event_cbxProductosActionPerformed
 
     /**
@@ -167,7 +218,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
 
     private void cargarProductos() {
         Connection c = Conexion.Conectar();
-        String query = "select * from Producto";
+        String query = "select * from ingrediente";
         Statement st;
         try {
             st = c.createStatement();
@@ -182,66 +233,112 @@ public class formActualizarProducto extends javax.swing.JFrame {
             System.out.println("No se pudo cargar los productos " + e.getMessage());
         }
     }
+    
+    //cargar proveedores
 
-    private void cargarStockProductoSeleccionado() {
-        Connection c = Conexion.Conectar();
-        String query = "select * from Producto where nombre = '" + cbxProductos.getSelectedItem() + "'";
+    private String obtenerCodigoCategoria() {
+        String query = "select * from categoriaingrediente where nombre = '" + cbxCategoria.getSelectedItem() + "'";
         Statement st;
         try {
+            Connection c = Conexion.Conectar();
             st = c.createStatement();
             ResultSet rs = st.executeQuery(query);
-            if (rs.next()) {
-                codigoProducto = rs.getString("codigo").trim();
-                stock = rs.getInt("stock");
-                txtStockActual.setText(String.valueOf(stock));
-            } else {
-                txtStockActual.setText(null);
+            while (rs.next()) {
+                codigoCategoria = rs.getString("codigo");
             }
+            c.close();
         } catch (SQLException e) {
-            System.out.println("No se pudo cargar el stock, " + e.getMessage());
+            System.out.println("Error al obtener codigo de categoriaingrediente");
+        }
+
+        return codigoCategoria;
+    }
+    //obtener codigo proveedor
+
+    private void actualizarProducto() {
+        if (cbxProductos.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Error: Elegir producto.");
+        } else {
+            if (cbxCategoria.getSelectedIndex() == 0 || txtTiempo.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Error: Elegir la categoría.");
+            } else {
+                if (cbxProveedor.getSelectedIndex() != 0) {
+                    Producto producto = new Producto();
+                    C_Producto cp = new C_Producto();
+                    producto.setCategoria(obtenerCodigoCategoria());
+                    //guardar codigo proveedor
+                    if (cbxTiempo.getSelectedIndex() == 1) {
+                        int n = Integer.parseInt(txtTiempo.getText()) * 30;
+                        producto.setVencimiento(n);
+                    } else {
+                        producto.setVencimiento(Integer.parseInt(txtTiempo.getText()));
+                    }
+                    if (cp.actualizarProducto(producto, codigoProducto)) {
+                        JOptionPane.showMessageDialog(null, "producto actualizado.");
+                        cbxProductos.setSelectedIndex(0);
+                        cbxCategoria.setSelectedIndex(0);
+                        cbxProveedor.setSelectedIndex(0);
+                        txtTiempo.setText(null);
+                        cbxTiempo.setSelectedIndex(0);
+                        cbxProductos.requestFocus();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al actualizar producto.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error: Elige un proveedor.");
+                }
+            }
         }
     }
 
-    private void actualizarStock() {
-        if (cbxProductos.getSelectedItem().equals("Seleccionar Producto:")) {
-            JOptionPane.showMessageDialog(null, "Error: Elegir producto.");
-        }else{
-            if (txtAgregarStock.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Error: Llenar el stock por agregar.");
-            }else{
-                if (Integer.parseInt(txtAgregarStock.getText()) > 0) {
-                    Producto producto = new Producto();
-                    C_Producto cp = new C_Producto();
-                    int stockActual = Integer.parseInt(txtStockActual.getText());
-                    int stockPorAgregar = Integer.parseInt(txtAgregarStock.getText());
-                    int nuevoStock = stockActual + stockPorAgregar;
-                    producto.setStock(nuevoStock);
-                    if (cp.actualizarStock(producto, codigoProducto)) {
-                        JOptionPane.showMessageDialog(null, "Stock actualizado.");
-                        cbxProductos.setSelectedIndex(0);
-                        cbxProductos.requestFocus();
-                        txtAgregarStock.setText(null);
-                        txtStockActual.setText(null);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Error al actualizar stock.");
-                    }
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Error: La cantidad no puede ser cero.");
-                }
+    private void cargarCategorias() {
+        Connection c = Conexion.Conectar();
+        String sql = "select * from categoriaingrediente ";
+        Statement st;
+        try {
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            cbxCategoria.removeAllItems();
+            cbxCategoria.addItem("Seleccione Categoria:");
+            while (rs.next()) {
+                cbxCategoria.addItem(rs.getString("nombre"));
             }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cargar categorias" + e.getMessage());
+        }
+    }
+
+    //Cargar proveedor falta
+    private void cargarTiempo() {
+        Connection c = Conexion.Conectar();
+        String sql = "select * from ingrediente ";
+        Statement st;
+        try {
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            rs.next();
+            cbxTiempo.setSelectedIndex(0);
+            txtTiempo.setText(rs.getString("vencimiento"));
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cargar tiempo" + e.getMessage());
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JComboBox<String> cbxCategoria;
     private javax.swing.JComboBox<String> cbxProductos;
+    private javax.swing.JComboBox<String> cbxProveedor;
+    private javax.swing.JComboBox<String> cbxTiempo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtAgregarStock;
-    private javax.swing.JTextField txtStockActual;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtTiempo;
     // End of variables declaration//GEN-END:variables
 
     void addWindowListener() {

@@ -17,10 +17,9 @@ public class C_Categoria extends BaseQuery {
         Connection cn = Conexion.Conectar();
         try
         {
-            PreparedStatement consulta = cn.prepareStatement("insert into TB_CategoriaProducto values (?, ?, ?)");
+            PreparedStatement consulta = cn.prepareStatement("insert into categoriaingrediente values (?, ?)");
             consulta.setString(1, c.getCodigo());
             consulta.setString(2, c.getNombre());
-            consulta.setString(3, c.getDescripcion());
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
             }
@@ -40,7 +39,7 @@ public class C_Categoria extends BaseQuery {
         Connection c = Conexion.Conectar();
         try {
             
-            PreparedStatement consulta = c.prepareStatement("delete from TB_CategoriaProducto where codigo = " + codigo);
+            PreparedStatement consulta = c.prepareStatement("delete from categoriaingrediente where codigo = " + codigo);
             consulta.executeUpdate();
             if (consulta.executeUpdate() > 0) {
                 estado = true;
@@ -55,7 +54,7 @@ public class C_Categoria extends BaseQuery {
     }
     
     public boolean existeCategoria(String nombre){
-        String cod = queryDatos("nombre", "TB_CategoriaProducto", nombre);
+        String cod = queryDatos("nombre", "categoriaingrediente", nombre);
         return cod.isEmpty() == false;
     }
 }
