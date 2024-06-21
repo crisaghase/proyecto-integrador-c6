@@ -9,7 +9,7 @@ public class C_Usuario extends BaseQuery {
     public boolean loginUser(Usuario user) {
         boolean estado = false;
         Connection c = Conexion.Conectar();
-        String sqlQuery = "select CONCAT(nombre, apellido) as Nombres, usuario, contraseña from Usuario where usuario = '" + user.getUsuario() + "' and contraseña = '" + user.getContraseña() + "'";
+        String sqlQuery = "select * from Credenciales where usuario = '" + user.getUsuario() + "' and contrasenia = '" + user.getContraseña() + "'";
 
         try {
             Statement s = c.createStatement();

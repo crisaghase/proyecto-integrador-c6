@@ -20,6 +20,7 @@ public class formRegistrarProducto extends javax.swing.JFrame {
     public formRegistrarProducto() {
         initComponents();
         cargarCategorias();
+        cargarProveedores();
     }
 
     @SuppressWarnings("unchecked")
@@ -209,6 +210,7 @@ public class formRegistrarProducto extends javax.swing.JFrame {
         });
     }
 
+    // TODO: Falta cambiar Producto por Ingrediente
     private void agregarProducto() {
         Producto producto = new Producto();
         C_Producto cp = new C_Producto();
@@ -253,7 +255,23 @@ public class formRegistrarProducto extends javax.swing.JFrame {
         }
     }
     
-    //Falta cargar proveedor
+    private void cargarProveedores(){
+        Connection c = Conexion.Conectar();
+        String sql = "select * from Proveedor";
+        Statement st;
+        try {
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            cbxProveedor.removeAllItems();
+            cbxProveedor.addItem("Seleccione Proveedor:");
+            while (rs.next()) {
+                cbxProveedor.addItem(rs.getString("nombre"));
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cargar categorias" + e.getMessage());
+        }
+    }
 
     private String obtenerCodigoCategoria() {
         String query = "select * from categoriaingrediente where nombre = '" + cbxCategoria.getSelectedItem() + "'";

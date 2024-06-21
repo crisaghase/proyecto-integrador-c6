@@ -1,9 +1,6 @@
 package Vista;
 
 import Modelo.DetalleVenta;
-import Modelo.Producto;
-import Modelo.Venta;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
@@ -15,21 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import Controlador.C_Cliente;
-import Controlador.C_Producto;
-import Controlador.C_Ventas;
 import Controlador.Conexion;
 
 public class formMenuPrincipal extends javax.swing.JFrame {
 
     // Variables venta
-    DefaultTableModel ventaModel = new DefaultTableModel();
-    String codigoClienteVenta = "";
-    String codigoProductoVenta = "";
-    String nombreProductoVenta = "";
     String idVentaSeleccionada = "";
-    double precioProductoVenta = 0; // Guarda el precio actual del producto seleccionado
-    int stockProductoBBDDVenta = 0; // Guarda el stock actual del producto seleccionado
     // Lista que almacena los productos seleccionados por vender
     ArrayList<DetalleVenta> listaProductos = new ArrayList<>();
 

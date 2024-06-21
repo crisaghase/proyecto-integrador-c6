@@ -8,7 +8,7 @@ public class C_Producto extends BaseQuery {
     // Metodo que permite registrar un producto en la base de datos
     public static boolean registrarProducto(Producto producto) {
         Connection c = Conexion.Conectar();
-        String query = "insert into ingrediente values (?,?,?,?,?)";
+        String query = "insert into Ingrediente values (?,?,?,?,?,?)";
         boolean estado = false;
 
         try {

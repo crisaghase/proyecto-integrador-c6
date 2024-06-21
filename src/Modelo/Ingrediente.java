@@ -4,8 +4,9 @@ public class Ingrediente {
     String codigo;
     String nombre;
     int stock;
-    String categoria;
-    int fechaExpiracion;
+    String codCategoria;
+    String codProveedor;
+    int vencimiento;
 
     public String getCodigo() {
         return codigo;
@@ -31,21 +32,27 @@ public class Ingrediente {
         this.stock = stock;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public int getVencimiento() {
+        return vencimiento;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setVencimiento(int vencimiento) {
+        this.vencimiento = vencimiento;
     }
 
-    public int getFechaExpiracion() {
-        return fechaExpiracion;
+    public String getCodCategoria() {
+        return codCategoria;
     }
 
-    public void setFechaExpiracion(int fechaExpiracion) {
-        this.fechaExpiracion = fechaExpiracion;
+    public void setCodCategoria(String codCategoria) {
+        this.codCategoria = codCategoria;
     }
-    
-    
+
+    public String getCodProveedor() {
+        return codProveedor;
+    }
+
+    public void setCodProveedor(String codProveedor) {
+        this.codProveedor = codProveedor;
+    }
 }

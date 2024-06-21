@@ -1,4 +1,4 @@
-package code;
+package Modelo;
 
 public class Ingreso {
     private String codigo;

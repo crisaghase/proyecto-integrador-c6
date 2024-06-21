@@ -1,4 +1,4 @@
-package code;
+package Modelo;
 
 public class Proveedor {
     private String codigo;

@@ -9,7 +9,7 @@ public class Conexion {
         Connection c = null;
         // Obtenemos la direccion a la base de datos local
 //        String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=SistemaVega;encrypt=true;trustServerCertificate=true;";
-        String url = "jdbc:sqlserver://localhost\\MSSQLSERVER01:1433;databaseName=Pasteleria;encrypt=true;trustServerCertificate=true;";
+        String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=Pasteleria;encrypt=true;trustServerCertificate=true;";
         // Credenciales de inicio
         String user = "sa";
         String pass = "1234";

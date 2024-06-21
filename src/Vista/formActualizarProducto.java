@@ -283,8 +283,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
         return codigoProducto;
     }
     
-    //cargar proveedores
-
+    // cargar proveedores
     private String obtenerCodigoCategoria() {
         String query = "select * from categoriaingrediente where nombre = '" + cbxCategoria.getSelectedItem() + "'";
         Statement st;
@@ -302,7 +301,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
 
         return codigoCategoria;
     }
-    //obtener codigo proveedor
+    // Obtener codigo proveedor
 
     private void actualizarProducto() {
         if (cbxProductos.getSelectedIndex() == 0) {
@@ -339,7 +338,6 @@ public class formActualizarProducto extends javax.swing.JFrame {
             }
         }
     }
-
     private void cargarCategorias() {
         Connection c = Conexion.Conectar();
         String sql = "select * from categoriaingrediente ";
@@ -379,9 +377,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
         }
     }
     
-    
-    
-    //Cargar proveedor falta
+    // Cargar proveedor falta
     private void actualizarTiempo() {
         Connection c = Conexion.Conectar();
         String sql = "select * from ingrediente where codigo='"+obtenerCodigoProducto()+"'";

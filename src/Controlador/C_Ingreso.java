@@ -1,6 +1,6 @@
-package sql;
+package Controlador;
 
-import code.Ingreso;
+import Modelo.Ingreso;
 import java.sql.*;
 import java.util.*;
 
