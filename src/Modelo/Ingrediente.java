@@ -1,12 +1,12 @@
 package Modelo;
 
 public class Ingrediente {
-    String codigo;
-    String nombre;
-    int stock;
-    String codCategoria;
-    String codProveedor;
-    int vencimiento;
+    private String codigo;
+    private String nombre;
+    private int stock;
+    private String codCategoria;
+    private String codProveedor;
+    private int vencimiento;
 
     public String getCodigo() {
         return codigo;
@@ -32,14 +32,6 @@ public class Ingrediente {
         this.stock = stock;
     }
 
-    public int getVencimiento() {
-        return vencimiento;
-    }
-
-    public void setVencimiento(int vencimiento) {
-        this.vencimiento = vencimiento;
-    }
-
     public String getCodCategoria() {
         return codCategoria;
     }
@@ -55,4 +47,13 @@ public class Ingrediente {
     public void setCodProveedor(String codProveedor) {
         this.codProveedor = codProveedor;
     }
+
+    public int getVencimiento() {
+        return vencimiento;
+    }
+
+    public void setVencimiento(int vencimiento) {
+        this.vencimiento = vencimiento;
+    }
+
 }

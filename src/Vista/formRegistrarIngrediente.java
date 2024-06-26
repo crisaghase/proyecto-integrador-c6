@@ -4,20 +4,18 @@
  */
 package Vista;
 
-import Modelo.Producto;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import Controlador.C_Producto;
+import Controlador.C_Ingrediente;
 import Controlador.Conexion;
+import Modelo.Ingrediente;
 
-public class formRegistrarProducto extends javax.swing.JFrame {
+public class formRegistrarIngrediente extends javax.swing.JFrame {
 
-    private String codigoCategoria;
-
-    public formRegistrarProducto() {
+    public formRegistrarIngrediente() {
         initComponents();
         cargarCategorias();
         cargarProveedores();
@@ -172,7 +170,7 @@ public class formRegistrarProducto extends javax.swing.JFrame {
 
     private void btnAgregarProductoSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoSQLActionPerformed
         // TODO add your handling code here:
-        agregarProducto();
+        agregarIngrediente();
     }//GEN-LAST:event_btnAgregarProductoSQLActionPerformed
 
     /**
@@ -192,43 +190,45 @@ public class formRegistrarProducto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formRegistrarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formRegistrarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formRegistrarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formRegistrarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formRegistrarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formRegistrarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formRegistrarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formRegistrarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new formRegistrarProducto().setVisible(true);
+                new formRegistrarIngrediente().setVisible(true);
             }
         });
     }
 
     // TODO: Falta cambiar Producto por Ingrediente
-    private void agregarProducto() {
-        Producto producto = new Producto();
-        C_Producto cp = new C_Producto();
+    private void agregarIngrediente() {
+        Ingrediente ingre = new Ingrediente();
+        C_Ingrediente c_ingre = new C_Ingrediente();
         if (txtNombre.getText().equals("") || txtNombre.getText().equals("") || txtTiempo.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe completar todos los campos.");
         } else {
-            producto.setNombre(txtNombre.getText());
-            producto.setCategoria(obtenerCodigoCategoria());
+            ingre.setNombre(txtNombre.getText());
+            ingre.setCodCategoria(obtenerCodigoCategoria());
             //falta obtener codigo proveedor 
+            ingre.setCodProveedor(obtenerCodigoProveedor());
 
             if (cbxTiempo.getSelectedIndex() == 1) {
                 int n = Integer.parseInt(txtTiempo.getText()) * 30;
-                producto.setVencimiento(n);
+                ingre.setVencimiento(n);
             } else {
-                producto.setVencimiento(Integer.parseInt(txtTiempo.getText()));
+                ingre.setVencimiento(Integer.parseInt(txtTiempo.getText()));
             }
 
-            if (cp.registrarProducto(producto)) {
+            if (c_ingre.registrarIngrediente(ingre)) {
                 JOptionPane.showMessageDialog(null, "Registro completado.");
                 reiniciarCamposRegistro();
             } else {
@@ -276,6 +276,7 @@ public class formRegistrarProducto extends javax.swing.JFrame {
     private String obtenerCodigoCategoria() {
         String query = "select * from categoriaingrediente where nombre = '" + cbxCategoria.getSelectedItem() + "'";
         Statement st;
+        String codigoCategoria = "";
         try {
             Connection c = Conexion.Conectar();
             st = c.createStatement();
@@ -289,6 +290,25 @@ public class formRegistrarProducto extends javax.swing.JFrame {
         }
 
         return codigoCategoria;
+    }
+    
+    private String obtenerCodigoProveedor() {
+        String query = "select * from proveedor where nombre = '" + cbxProveedor.getSelectedItem() + "'";
+        Statement st;
+        String codigoProveedor = "";
+        try {
+            Connection c = Conexion.Conectar();
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                codigoProveedor = rs.getString("codigo");
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener codigo de categoriaingrediente");
+        }
+
+        return codigoProveedor;
     }
 
     private void reiniciarCamposRegistro() {
