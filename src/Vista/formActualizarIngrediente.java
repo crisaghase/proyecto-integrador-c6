@@ -1,21 +1,21 @@
 package Vista;
 
-import Modelo.Producto;
+import Modelo.Ingrediente;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import Controlador.C_Producto;
+import Controlador.C_Ingrediente;
 import Controlador.Conexion;
 
-public class formActualizarProducto extends javax.swing.JFrame {
+public class formActualizarIngrediente extends javax.swing.JFrame {
 
-    String codigoProducto = "";
+    String codigoIngrediente = "";
     int stock = 0;
     private String codigoCategoria;
 
-    public formActualizarProducto() {
+    public formActualizarIngrediente() {
         initComponents();
         cargarProductos();
         cargarCategorias();
@@ -182,7 +182,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        actualizarProducto();
+        actualizarIngrediente();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void cbxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductosActionPerformed
@@ -211,20 +211,21 @@ public class formActualizarProducto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formActualizarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formActualizarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formActualizarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formActualizarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formActualizarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formActualizarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formActualizarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formActualizarIngrediente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new formActualizarProducto().setVisible(true);
+                new formActualizarIngrediente().setVisible(true);
             }
         });
     }
@@ -247,8 +248,8 @@ public class formActualizarProducto extends javax.swing.JFrame {
         }
     }
     
-    //obtener el codigo de categoria segun el producto
-    private String obtenerCodigoProductoCat() {
+    //obtener el codigo de categoria segun el ingre
+    private String obtenerCodigoCategoriaProducto() {
         String query = "select * from ingrediente where nombre = '" + cbxProductos.getSelectedItem() + "'";
         Statement st;
         try {
@@ -265,7 +266,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
 
         return codigoCategoria;
     }
-    private String obtenerCodigoProducto() {
+    private String obtenerCodigoIngrediente() {
         String query = "select * from ingrediente where nombre = '" + cbxProductos.getSelectedItem() + "'";
         Statement st;
         try {
@@ -273,14 +274,14 @@ public class formActualizarProducto extends javax.swing.JFrame {
             st = c.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                codigoProducto = rs.getString("codigo");
+                codigoIngrediente = rs.getString("codigo");
             }
             c.close();
         } catch (SQLException e) {
             System.out.println("Error al obtener codigo de ingrediente");
         }
 
-        return codigoProducto;
+        return codigoIngrediente;
     }
     
     // cargar proveedores
@@ -303,7 +304,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
     }
     // Obtener codigo proveedor
 
-    private void actualizarProducto() {
+    private void actualizarIngrediente() {
         if (cbxProductos.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Error: Elegir producto.");
         } else {
@@ -311,17 +312,17 @@ public class formActualizarProducto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error: Elegir la categoría.");
             } else {
                 if (cbxProveedor.getSelectedIndex() != 0) {
-                    Producto producto = new Producto();
-                    C_Producto cp = new C_Producto();
-                    producto.setCategoria(obtenerCodigoCategoria());
-                    //guardar codigo proveedor
+                    Ingrediente ingre = new Ingrediente();
+                    C_Ingrediente c_ingre = new C_Ingrediente();
+                    ingre.setCodCategoria(obtenerCodigoCategoria());
+                    ingre.setCodProveedor(obtenerCodigoProveedor());
                     if (cbxTiempo.getSelectedIndex() == 1) {
                         int n = Integer.parseInt(txtTiempo.getText()) * 30;
-                        producto.setVencimiento(n);
+                        ingre.setVencimiento(n);
                     } else {
-                        producto.setVencimiento(Integer.parseInt(txtTiempo.getText()));
+                        ingre.setVencimiento(Integer.parseInt(txtTiempo.getText()));
                     }
-                    if (cp.actualizarProducto(producto, codigoProducto)) {
+                    if (c_ingre.actualizarIngrediente(ingre, codigoIngrediente)) {
                         JOptionPane.showMessageDialog(null, "producto actualizado.");
                         cbxProductos.setSelectedIndex(0);
                         cbxCategoria.setSelectedIndex(0);
@@ -364,7 +365,7 @@ public class formActualizarProducto extends javax.swing.JFrame {
             st = c.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {                
-                if(rs.getString(1).equals(obtenerCodigoProductoCat())){
+                if(rs.getString(1).equals(obtenerCodigoCategoriaProducto())){
                     System.out.println("entro");
                     cbxCategoria.setSelectedIndex(i);
                 }
@@ -377,10 +378,29 @@ public class formActualizarProducto extends javax.swing.JFrame {
         }
     }
     
+    private String obtenerCodigoProveedor() {
+        String query = "select * from proveedor where nombre = '" + cbxProveedor.getSelectedItem() + "'";
+        Statement st;
+        String codigoProveedor = "";
+        try {
+            Connection c = Conexion.Conectar();
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                codigoProveedor = rs.getString("codigo");
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener codigo de categoriaingrediente");
+        }
+
+        return codigoProveedor;
+    }
+    
     // Cargar proveedor falta
     private void actualizarTiempo() {
         Connection c = Conexion.Conectar();
-        String sql = "select * from ingrediente where codigo='"+obtenerCodigoProducto()+"'";
+        String sql = "select * from ingrediente where codigo='"+obtenerCodigoIngrediente()+"'";
         Statement st;
         try {
             st = c.createStatement();

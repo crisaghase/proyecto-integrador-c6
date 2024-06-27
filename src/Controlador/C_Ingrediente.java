@@ -1,7 +1,6 @@
 package Controlador;
 
 import Modelo.Ingrediente;
-import Modelo.Producto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,19 +10,15 @@ import java.util.List;
 
 public class C_Ingrediente {
 
-    public static void main(String[] args) {
-        String ultimoCodigo = getUltimoCodigo();
-    }
-
     // Metodo que permite registrar un Ingrediente en la base de datos
-    public static boolean registrarIngrediente(Ingrediente ingrediente) {
+    public boolean registrarIngrediente(Ingrediente ingrediente) {
         Connection c = Conexion.Conectar();
         String query = "insert into Ingrediente values (?,?,?,?,?,?)";
         boolean estado = false;
 
         try {
             PreparedStatement consulta = c.prepareStatement(query);
-            consulta.setString(1, ingrediente.getCodigo());
+            consulta.setString(1, getUltimoCodigo());
             consulta.setString(2, ingrediente.getNombre());
             consulta.setInt(3, ingrediente.getStock());
             consulta.setString(4, ingrediente.getCodCategoria());
@@ -41,7 +36,7 @@ public class C_Ingrediente {
     }
     
     // Obtener lista de ingredientes para el consumo de Recetas
-    public static List<Ingrediente> getListaIngredientes() {
+    public List<Ingrediente> getListaIngredientes() {
         List<Ingrediente> lista = new ArrayList();
         try {
             Connection c = Conexion.Conectar();
@@ -65,7 +60,7 @@ public class C_Ingrediente {
         return lista;
     }
 
-    private static String getUltimoCodigo() {
+    private String getUltimoCodigo() {
         String cod = "";
         Connection c = Conexion.Conectar();
         String query = "select top 1 * from Ingrediente order by codigo desc";
@@ -78,13 +73,33 @@ public class C_Ingrediente {
             ultCod = ultCod.substring(3).trim();
             int numCod = Integer.parseInt(ultCod);
             numCod++;
-            cod = "PRO00" + numCod;
-            System.out.println(numCod);
+            cod = "PRO" + String.format("%0" + 4 + "d", numCod);;
             c.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
         return cod;
+    }
+    
+    public boolean actualizarIngrediente(Ingrediente ingrediente, String codigo) {
+        boolean estado = false;
+        String query = "update ingrediente set codigocat=? , codigopro=?, vencimiento=? where codigo = '" + codigo + "'";
+        Connection c = Conexion.Conectar();
+        try {
+            PreparedStatement ps = c.prepareStatement(query);
+            ps.setString(1, ingrediente.getCodCategoria());
+            ps.setString(2, ingrediente.getCodProveedor());
+            ps.setInt(3, ingrediente.getVencimiento());
+
+            if (ps.executeUpdate() > 0) {
+                estado = true;
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar producto.");
+        }
+
+        return estado;
     }
 }

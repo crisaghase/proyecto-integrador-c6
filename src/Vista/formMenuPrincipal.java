@@ -961,6 +961,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private void btnIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresosActionPerformed
         // TODO add your handling code here:
         abrirPanel(jPanelVentanaIngresos);
+        cargarHistorialDetalleVenta();
     }//GEN-LAST:event_btnIngresosActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
@@ -989,7 +990,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProductoActionPerformed
         // TODO add your handling code here:
-        formActualizarProducto actualizarProducto = new formActualizarProducto();
+        formActualizarIngrediente actualizarProducto = new formActualizarIngrediente();
         actualizarProducto.setVisible(true);
         actualizarProducto.addWindowListener(new WindowAdapter() {
             @Override
@@ -1000,7 +1001,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarProductoActionPerformed
 
     private void btnRegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProductoActionPerformed
-        formRegistrarProducto registrarProducto = new formRegistrarProducto();
+        formRegistrarIngrediente registrarProducto = new formRegistrarIngrediente();
         registrarProducto.setVisible(true);
         registrarProducto.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         registrarProducto.addWindowListener(new WindowAdapter() {
@@ -1050,7 +1051,6 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private void btnPastelZanahoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelZanahoriaActionPerformed
         // TODO add your handling code here:
         if (false) {
-            
             JOptionPane.showMessageDialog(rootPane, "Consumo registrado.");
         }else{
             JOptionPane.showMessageDialog(rootPane, "No cuenta con los ingredientes suficientes.");
