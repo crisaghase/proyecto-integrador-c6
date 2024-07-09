@@ -1,5 +1,6 @@
 package Vista;
 
+import Controlador.C_Receta;
 import Modelo.DetalleVenta;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -13,14 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import Controlador.Conexion;
+import Modelo.DetalleReceta;
+import java.util.List;
 
 public class formMenuPrincipal extends javax.swing.JFrame {
 
     // Variables venta
     String idVentaSeleccionada = "";
-    // Lista que almacena los productos seleccionados por vender
-    ArrayList<DetalleVenta> listaProductos = new ArrayList<>();
-
+    
     public formMenuPrincipal() {
         initComponents();
         abrirPanel(null);
@@ -1050,31 +1051,32 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
     private void btnPastelZanahoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelZanahoriaActionPerformed
         // TODO add your handling code here:
-        if (false) {
-            JOptionPane.showMessageDialog(rootPane, "Consumo registrado.");
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "No cuenta con los ingredientes suficientes.");
-        }
+        prepararPastelSegunNombre("Pastel de zanahoria");
     }//GEN-LAST:event_btnPastelZanahoriaActionPerformed
 
     private void btnPastelMaracuyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelMaracuyaActionPerformed
         // TODO add your handling code here:
+        prepararPastelSegunNombre("Pastel de Maracuya");
     }//GEN-LAST:event_btnPastelMaracuyaActionPerformed
 
     private void btnPastelChocolateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelChocolateActionPerformed
         // TODO add your handling code here:
+        prepararPastelSegunNombre("Pastel de Chocolate");
     }//GEN-LAST:event_btnPastelChocolateActionPerformed
 
     private void btnPastelVelvetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelVelvetActionPerformed
         // TODO add your handling code here:
+        prepararPastelSegunNombre("Torta Red Velvet");
     }//GEN-LAST:event_btnPastelVelvetActionPerformed
 
     private void btnPastelCentralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelCentralActionPerformed
         // TODO add your handling code here:
+        prepararPastelSegunNombre("Pastel Central");
     }//GEN-LAST:event_btnPastelCentralActionPerformed
 
     private void btnPastelFresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelFresaActionPerformed
         // TODO add your handling code here:
+        prepararPastelSegunNombre("Pastel de Fresa");
     }//GEN-LAST:event_btnPastelFresaActionPerformed
 
     // Permite activar SOLO el panel seleccionado
@@ -1134,12 +1136,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 //        }
 //    }
 
-    // Redondea los montos
-    private double redondear(double n) {
-        return (Math.round(n) * 100) / 100;
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="Ventana Historial">
+    // <editor-fold defaultstate="collapsed" desc="Historial de Venta">
     // Carga en la tabla todas las ventas realizadas
     private void cargarHistorialVentas() {
         Connection c = Conexion.Conectar();
@@ -1203,7 +1200,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         int fila = tableHistorial.getSelectedRow();
         idVentaSeleccionada = tableHistorial.getValueAt(fila, 0).toString().trim();
     }
+    // </editor-fold> 
 
+    
+    // <editor-fold defaultstate="collapsed" desc="Ingredientes">
     // Carga los productos de la BBDD a la tabla de Productos
     private void cargarTablaIngredientes() {
         Connection c = Conexion.Conectar();
@@ -1244,7 +1244,81 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         txtTotalProductos.setText(String.valueOf(i));
 
     }
+    // </editor-fold> 
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Ventas">
+    
+    private void prepararPastelSegunNombre(String nombrePastel) {
+        C_Receta cr = new C_Receta();
+        if (sePuedePrepararPastel(nombrePastel)) {
+            
+            // Crear mensaje de confirmación con opciones
+            int opcion = JOptionPane.showOptionDialog(
+                rootPane,                    // Componente padre
+                "Ingredientes disponibles\n",  // Mensaje
+                "Confirmar preparación",     // Título
+                JOptionPane.YES_NO_OPTION,   // Tipo de opción (sí/no)
+                JOptionPane.QUESTION_MESSAGE,// Tipo de mensaje (pregunta)
+                null,                       // Icono personalizado (null para usar el predeterminado)
+                new String[]{"Confirmar", "Cancelar"},  // Texto de los botones
+                "Confirmar"                 // Texto del botón por defecto
+            );
 
+            // Procesar la opción seleccionada
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Aqui restar la cantidad de los ingredientes usados
+                List<DetalleReceta> detallesReceta = cr.obtenerDetallesReceta(nombrePastel);
+                if (cr.actualizarInventario(detallesReceta)) {
+                    // Mostrar mensaje con el stock actual de los ingredientes usados
+                    mostrarStockActualIngredientes(detallesReceta);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(rootPane, "No se pudo actualizar el inventario");
+                }
+                
+            } else {
+                // Opción seleccionada es NO_OPTION o se cerró la ventana
+                JOptionPane.showMessageDialog(rootPane, "Preparación cancelada.");
+            }
+        }
+        else
+        {   
+            String mensajeReceta = cr.obtenerInformacionReceta(nombrePastel);
+            JOptionPane.showMessageDialog(rootPane, mensajeReceta);
+        }
+    }
+    
+    private boolean sePuedePrepararPastel(String nombrePastel) {
+        C_Receta cr = new C_Receta();
+        String codigoReceta = cr.obtenerCodigoReceta(nombrePastel);
+        if (cr.verificarIngredientesSuficientes(codigoReceta)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    // Método para mostrar el stock actual de los ingredientes usados
+    private void mostrarStockActualIngredientes(List<DetalleReceta> detallesReceta) {
+        StringBuilder mensaje = new StringBuilder();
+
+        mensaje.append("Stock actual de ingredientes usados:\n");
+
+        for (DetalleReceta detalle : detallesReceta) {
+            mensaje.append(detalle.getCantidad()).append(" de ").append(detalle.getCodigoIngrediente());
+            mensaje.append(" - Stock actual: ").append(detalle.getStockActual()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(rootPane, mensaje.toString());
+    }
+    
+    
+    
+    // </editor-fold> 
+    
+    
     // <editor-fold defaultstate="collapsed" desc="Extras">
     private void cerrarSesion() {
         formLogin login = new formLogin();

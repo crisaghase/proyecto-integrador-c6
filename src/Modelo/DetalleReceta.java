@@ -5,6 +5,15 @@ public class DetalleReceta {
     String codigoReceta;
     String codigoIngrediente;
     int cantidad;
+    int stockActual;
+
+    public int getStockActual() {
+        return stockActual;
+    }
+
+    public void setStockActual(int stockActual) {
+        this.stockActual = stockActual;
+    }
 
     public String getCodigoDetalleReceta() {
         return codigoDetalleReceta;
