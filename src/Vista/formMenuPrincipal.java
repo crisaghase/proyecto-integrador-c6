@@ -1,7 +1,8 @@
 package Vista;
 
 import Controlador.C_Receta;
-import Modelo.DetalleVenta;
+import Controlador.C_Ventas;
+import Modelo.HistorialReceta;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
@@ -15,19 +16,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import Controlador.Conexion;
 import Modelo.DetalleReceta;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class formMenuPrincipal extends javax.swing.JFrame {
-
-    // Variables venta
-    String idVentaSeleccionada = "";
     
     public formMenuPrincipal() {
         initComponents();
         abrirPanel(null);
 
         // Cargar Historial
-        cargarHistorialVentas();
+        cargarHistorialRecetas();
 
         // Ventana Productos
         cargarTablaIngredientes();
@@ -67,11 +67,6 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         jScrollPaneHistorial = new javax.swing.JScrollPane();
         tableHistorial = new javax.swing.JTable();
-        jScrollDetalleVenta = new javax.swing.JScrollPane();
-        tableHistorialDetalle = new javax.swing.JTable();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        btnVerDetalle = new javax.swing.JButton();
         jPanelVentanaVentas = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         Pastel_1 = new javax.swing.JPanel();
@@ -372,6 +367,8 @@ public class formMenuPrincipal extends javax.swing.JFrame {
                 .addGap(33, 33, 33))
         );
 
+        jPanelVentanaHistorial.setPreferredSize(new java.awt.Dimension(1196, 800));
+
         jPanel12.setBackground(new java.awt.Color(36, 121, 121));
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -403,58 +400,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "N°", "Cliente", "Monto"
+
             }
         ));
-        tableHistorial.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableHistorialMouseClicked(evt);
-            }
-        });
         jScrollPaneHistorial.setViewportView(tableHistorial);
-
-        tableHistorialDetalle.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "N° Detalle", "N° Venta", "Cod Producto", "Cantidad", "Importe"
-            }
-        ));
-        jScrollDetalleVenta.setViewportView(tableHistorialDetalle);
-
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        jLabel9.setText("Detalle de Venta");
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnVerDetalle.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        btnVerDetalle.setText("Ver");
-        btnVerDetalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerDetalleActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVerDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVerDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                .addContainerGap())
-        );
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -462,34 +411,14 @@ public class formMenuPrincipal extends javax.swing.JFrame {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPaneHistorial)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollDetalleVenta)
-                        .addContainerGap())
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addGap(260, 260, 260))))
+                .addComponent(jScrollPaneHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 1170, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPaneHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollDetalleVenta)))
-                .addContainerGap())
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPaneHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelVentanaHistorialLayout = new javax.swing.GroupLayout(jPanelVentanaHistorial);
@@ -962,7 +891,6 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private void btnIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresosActionPerformed
         // TODO add your handling code here:
         abrirPanel(jPanelVentanaIngresos);
-        cargarHistorialDetalleVenta();
     }//GEN-LAST:event_btnIngresosActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
@@ -1012,20 +940,6 @@ public class formMenuPrincipal extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_btnRegistrarProductoActionPerformed
-
-    private void btnVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetalleActionPerformed
-        // TODO add your handling code here:
-        if (idVentaSeleccionada.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecciona una venta.");
-        } else {
-            cargarHistorialDetalleVenta();
-        }
-    }//GEN-LAST:event_btnVerDetalleActionPerformed
-
-    private void tableHistorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableHistorialMouseClicked
-        // TODO add your handling code here:
-        seleccionarVenta();
-    }//GEN-LAST:event_tableHistorialMouseClicked
 
     private void btnRegistrarProducto4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProducto4ActionPerformed
         // TODO add your handling code here:
@@ -1089,117 +1003,27 @@ public class formMenuPrincipal extends javax.swing.JFrame {
             panel.setVisible(true);
         }
     }
-    
-//    // Registra una venta con todos los productos de la tabla
-//    private void registrarVenta() {
-//        Venta venta = new Venta();
-//        DetalleVenta detalle = new DetalleVenta();
-//        C_Ventas cv = new C_Ventas();
-//        C_Cliente cc = new C_Cliente();
-//
-//        if (listaProductos.size() <= 0) {
-//            JOptionPane.showMessageDialog(null, "Error: Llenar los campos.");
-//        } else {
-//            venta.setCodigo(txtBoleta.getText().trim());
-//            venta.setCodigoCliente(cc.obtenerCodigoCliente(codigoClienteVenta));
-//            venta.setImporte(Double.parseDouble(txtTotal.getText()));
-//            // Intentamos registrar la venta en la BBDD
-//            if (cv.registrarVenta(venta)) {
-//                JOptionPane.showMessageDialog(null, "Venta registrada.");
-//                // Registramos cada detalle de venta a la BBDD
-//                System.out.println("Tamaño: " + listaProductos.size());
-//                for (int i = 0; i < listaProductos.size(); i++) {
-//                    detalle.setCodigoVenta(listaProductos.get(i).getCodigoVenta());
-//                    detalle.setCodigoDetalleVenta(listaProductos.get(i).getCodigoDetalleVenta());
-//                    detalle.setCodigoProducto(listaProductos.get(i).getCodigoProducto());
-//                    detalle.setCantidad(listaProductos.get(i).getCantidad());
-//                    detalle.setPrecio(listaProductos.get(i).getPrecio());
-//                    detalle.setImporte(listaProductos.get(i).getImporte());
-//                    if (cv.registrarDetalleVenta(detalle)) {
-//                        cargarProductosParaVenta();
-//                        txtSubtotal.setText("0.00");
-//                        txtIGV.setText("0.00");
-//                        txtTotal.setText("0.00");
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Error al registrar detalle de venta.....");
-//                    }
-//                }
-//
-//                colocarCodigoBoletaVenta();
-//                actualizarProductosPostVenta();
-//                cancelarVenta();
-//                cargarHistorialVentas();
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Error al registrar venta.");
-//            }
-//        }
-//    }
 
     // <editor-fold defaultstate="collapsed" desc="Historial de Venta">
-    // Carga en la tabla todas las ventas realizadas
-    private void cargarHistorialVentas() {
-        Connection c = Conexion.Conectar();
+    
+    private void cargarHistorialRecetas(){
+        C_Ventas cv = new C_Ventas();
+        List<HistorialReceta> lista = cv.cargarHistorialReceta();
+        actualizarTablaPreparaciones(lista);
+    }
+
+    private void actualizarTablaPreparaciones(List<HistorialReceta> lista) {
         DefaultTableModel model = new DefaultTableModel();
-        String query = "select * from TB_Venta";
-        try {
-            Statement st = c.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            jScrollPaneHistorial.setViewportView(tableHistorial);
-            model.addColumn("N° Boleta");
-            model.addColumn("Monto");
-            model.addColumn("Cliente");
-            tableHistorial.setModel(model);
-            while (rs.next()) {
-                Object[] data = new Object[3];
+        model.setColumnIdentifiers(new String[]{"Código Receta", "Nombre Pastel", "Fecha de Preparación"});
 
-                for (int i = 0; i < 3; i++) {
-                    data[i] = rs.getObject(i + 1);
-                }
-
-                model.addRow(data);
-            }
-            c.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cargar el historial de ventas.");
+        jScrollPaneHistorial.setViewportView(tableHistorial);        
+        for (HistorialReceta preparacion : lista) {
+            model.addRow(new Object[]{preparacion.getCodigoReceta(), preparacion.getNombrePastel(), preparacion.getFechaPreparacion()});
         }
+
+        tableHistorial.setModel(model);
     }
 
-    // Carga en la tabla todos los detalles de la venta seleccionada
-    private void cargarHistorialDetalleVenta() {
-        Connection c = Conexion.Conectar();
-        DefaultTableModel model = new DefaultTableModel();
-        String query = "select * from TB_DetalleVenta where codigo_ven = '" + idVentaSeleccionada + "'";
-        try {
-            Statement st = c.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            jScrollDetalleVenta.setViewportView(tableHistorialDetalle);
-            model.addColumn("N° Detalle");
-            model.addColumn("N° Venta");
-            model.addColumn("Cod Producto");
-            model.addColumn("Cantidad");
-            model.addColumn("Importe");
-            tableHistorialDetalle.setModel(model);
-            while (rs.next()) {
-                Object[] data = new Object[5];
-
-                for (int i = 0; i < 5; i++) {
-                    data[i] = rs.getObject(i + 1);
-                }
-
-                model.addRow(data);
-            }
-            c.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cargar el detalle de ventas.");
-        }
-    }
-
-    // Obtiene el ID de la venta que estamos tocando en la tabla
-    private void seleccionarVenta() {
-        int fila = tableHistorial.getSelectedRow();
-        idVentaSeleccionada = tableHistorial.getValueAt(fila, 0).toString().trim();
-    }
     // </editor-fold> 
 
     
@@ -1251,6 +1075,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     
     private void prepararPastelSegunNombre(String nombrePastel) {
         C_Receta cr = new C_Receta();
+        C_Ventas cv = new C_Ventas();
         if (sePuedePrepararPastel(nombrePastel)) {
             
             // Crear mensaje de confirmación con opciones
@@ -1270,8 +1095,15 @@ public class formMenuPrincipal extends javax.swing.JFrame {
                 // Aqui restar la cantidad de los ingredientes usados
                 List<DetalleReceta> detallesReceta = cr.obtenerDetallesReceta(nombrePastel);
                 if (cr.actualizarInventario(detallesReceta)) {
+                    
                     // Mostrar mensaje con el stock actual de los ingredientes usados
                     mostrarStockActualIngredientes(detallesReceta);
+                    
+                    // Agregamos este pastel (Receta) al historial y actualizamos la tabla
+                    String codigoReceta = cr.obtenerCodigoReceta(nombrePastel);
+                    String fecha = obtenerFechaActual();
+                    cv.agregarHistorialReceta(codigoReceta, fecha);
+                    cargarHistorialRecetas();
                 }
                 else
                 {
@@ -1314,7 +1146,16 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, mensaje.toString());
     }
     
-    
+    // Método para obtener la fecha actual formateada como String
+    public String obtenerFechaActual() {
+        LocalDate fechaActual = LocalDate.now(); // Obtener la fecha actual
+        
+        // Formatear la fecha como String en el formato deseado (por ejemplo, "yyyy-MM-dd")
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fechaFormateada = fechaActual.format(formatter);
+        
+        return fechaFormateada;
+    }
     
     // </editor-fold> 
     
@@ -1399,7 +1240,6 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrarProducto4;
     private javax.swing.JButton btnReporteIngreso;
     private javax.swing.JButton btnVender;
-    private javax.swing.JButton btnVerDetalle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1415,23 +1255,19 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelVentanaHistorial;
     private javax.swing.JPanel jPanelVentanaIngresos;
     private javax.swing.JPanel jPanelVentanaProductos;
     private javax.swing.JPanel jPanelVentanaVentas;
-    private javax.swing.JScrollPane jScrollDetalleVenta;
     private javax.swing.JScrollPane jScrollPaneHistorial;
     private javax.swing.JScrollPane jScrollPaneProductos;
     private javax.swing.JScrollPane jScrollPaneProductos4;
     private javax.swing.JTable jTableProductos;
     private javax.swing.JTable jTableProductos4;
     private javax.swing.JTable tableHistorial;
-    private javax.swing.JTable tableHistorialDetalle;
     private javax.swing.JLabel titulo;
     private javax.swing.JTextField txtTotalProductos;
     // End of variables declaration//GEN-END:variables
