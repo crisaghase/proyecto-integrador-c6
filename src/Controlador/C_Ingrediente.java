@@ -73,7 +73,7 @@ public class C_Ingrediente {
             ultCod = ultCod.substring(3).trim();
             int numCod = Integer.parseInt(ultCod);
             numCod++;
-            cod = "PRO" + String.format("%0" + 4 + "d", numCod);;
+            cod = "PRO" + String.format("%0" + 3 + "d", numCod);
             c.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
