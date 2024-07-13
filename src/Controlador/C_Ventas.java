@@ -67,18 +67,18 @@ public class C_Ventas {
     private String getUltimoCodigo() {
         String cod = "";
         Connection c = Conexion.Conectar();
-        String query = "select top 1 * from HistorialReceta order by codigo ASC";
+        String query = "select top 1 * from HistorialReceta order by codigo DESC";
 
         try {
             PreparedStatement consulta = c.prepareStatement(query);
             ResultSet rs = consulta.executeQuery();
             rs.next();
             String ultCod = rs.getString(1);
-            ultCod = ultCod.substring(2).trim();
+            ultCod = ultCod.substring(3).trim();
             System.out.println(ultCod);
             int numCod = Integer.parseInt(ultCod);
             numCod++;
-            cod = "HR" + String.format("%0" + 4 + "d", numCod);
+            cod = "HRC" + String.format("%0" + 3 + "d", numCod);
             System.out.println(cod);
             c.close();
         } catch (SQLException e) {
