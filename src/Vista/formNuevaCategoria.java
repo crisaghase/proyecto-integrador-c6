@@ -96,6 +96,7 @@ public class formNuevaCategoria extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     // Creamos una nueva categoria y se agrega a la base de datos
@@ -103,20 +104,18 @@ public class formNuevaCategoria extends javax.swing.JFrame {
         // TODO add your handling code here:
         CategoriaProducto nuevaCategoria = new CategoriaProducto();
         C_Categoria c = new C_Categoria();
-        nuevaCategoria.setNombre(txtNombre.getText());
         if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Completar el campo.");
         }else{
-            if (c.existeCategoria(txtNombre.getText()) == false) {
+            if (c.existeCategoria(txtNombre.getText())) {
+                nuevaCategoria.setNombre(txtNombre.getText());
                 if (c.guardar(nuevaCategoria)) {
                 JOptionPane.showMessageDialog(null, "Registro exitoso.");
                 txtNombre.setText(null);
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al crear nueva categoria.");
                 }
-            }
-            else
-            {
+            } else {
                 JOptionPane.showMessageDialog(null, "Categoria ya existe en BD.");
             }
         }
