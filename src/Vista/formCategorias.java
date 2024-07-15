@@ -2,24 +2,22 @@ package Vista;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import java.sql.*;
+import javax.swing.*;
+import Controlador.*;
+import Modelo.CategoriaProducto;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import Controlador.C_Categoria;
-import Controlador.Conexion;
 
 public class formCategorias extends javax.swing.JFrame {
 
     private String codigoCategoria;
-    
+
     public formCategorias() {
         initComponents();
         cargarTablaCategorias();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -175,26 +173,26 @@ public class formCategorias extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         C_Categoria categoria = new C_Categoria();
-        
+
         System.out.println(codigoCategoria.trim());
-        if (codigoCategoria.isEmpty() == false) {
-            if (categoria.eliminarCategoria(codigoCategoria.trim()) == false){
+        if (codigoCategoria.isEmpty()==false) {
+            if (categoria.eliminarCategoria(codigoCategoria)) {
                 JOptionPane.showMessageDialog(null, "Categoria Eliminada");
                 cargarTablaCategorias();
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Error al eliminar categoria");
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        BuscarCategoria();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -236,7 +234,7 @@ public class formCategorias extends javax.swing.JFrame {
         });
     }
 
-    private void cargarTablaCategorias(){
+    private void cargarTablaCategorias() {
         Connection c = Conexion.Conectar();
         DefaultTableModel model = new DefaultTableModel();
         String query = "select codigo, nombre from categoriaingrediente ";
@@ -248,30 +246,47 @@ public class formCategorias extends javax.swing.JFrame {
             jScrollPane1.setViewportView(jTableCategorias);
             model.addColumn("Codigo");
             model.addColumn("Nombre");
-            while (rs.next()) {                
+            while (rs.next()) {
                 Object[] data = new Object[2];
                 for (int i = 0; i < 2; i++) {
                     data[i] = rs.getObject(i + 1);
                 }
-                
+
                 model.addRow(data);
             }
             c.close();
         } catch (Exception e) {
             System.out.println("Error al cargar las categorías.");
         }
-        
+
         jTableCategorias.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e){
             int fila = jTableCategorias.rowAtPoint(e.getPoint());
             if (fila > -1) {
-                System.out.println("Fila seleccionada");
                 codigoCategoria = model.getValueAt(fila, 0).toString();
             }
         }});
     }
-    
+
+    private void BuscarCategoria() {
+        C_Categoria cc = new C_Categoria();
+        List<CategoriaProducto> lista;
+        lista = cc.buscarCategoria(txtBuscar.getText());
+        DefaultTableModel model = new DefaultTableModel();
+        jTableCategorias = new JTable(model);
+        jScrollPane1.setViewportView(jTableCategorias);
+        model.addColumn("Codigo");
+        model.addColumn("Nombre");
+        for (CategoriaProducto x : lista) {
+            Object[] data = new Object[2];
+            data[0] = (Object)x.getCodigo();
+            data[1] = (Object)x.getNombre();
+            model.addRow(data);
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;

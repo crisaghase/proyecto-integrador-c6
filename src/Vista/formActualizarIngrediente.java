@@ -12,13 +12,12 @@ import Controlador.Conexion;
 public class formActualizarIngrediente extends javax.swing.JFrame {
 
     String codigoIngrediente = "";
-    int stock = 0;
-    private String codigoCategoria;
 
     public formActualizarIngrediente() {
         initComponents();
         cargarProductos();
         cargarCategorias();
+        cargarProveedores();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -78,10 +77,17 @@ public class formActualizarIngrediente extends javax.swing.JFrame {
 
         cbxProveedor.setEditable(true);
         cbxProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxProveedorActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Tiempo de vencimiento :");
+
+        txtTiempo.setText("      ");
 
         cbxTiempo.setEditable(true);
         cbxTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Mes" }));
@@ -99,30 +105,32 @@ public class formActualizarIngrediente extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(72, Short.MAX_VALUE)
+                .addContainerGap(66, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(30, 30, 30)
-                                .addComponent(cbxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel14)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(cbxTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(19, 19, 19))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(cbxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(19, 19, 19)))
                         .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,21 +186,28 @@ public class formActualizarIngrediente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         actualizarIngrediente();
+        obtenerCodigoIngrediente();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void cbxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductosActionPerformed
         actualizarCategorias();
+        actualizarProveedor();
         actualizarTiempo();
     }//GEN-LAST:event_cbxProductosActionPerformed
 
     private void cbxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCategoriaActionPerformed
+
+    private void cbxProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxProveedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,98 +262,7 @@ public class formActualizarIngrediente extends javax.swing.JFrame {
             System.out.println("No se pudo cargar los productos " + e.getMessage());
         }
     }
-    
-    //obtener el codigo de categoria segun el ingre
-    private String obtenerCodigoCategoriaProducto() {
-        String query = "select * from ingrediente where nombre = '" + cbxProductos.getSelectedItem() + "'";
-        Statement st;
-        try {
-            Connection c = Conexion.Conectar();
-            st = c.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                codigoCategoria = rs.getString("codigocat");
-            }
-            c.close();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener codigo de ingrediente");
-        }
 
-        return codigoCategoria;
-    }
-    private String obtenerCodigoIngrediente() {
-        String query = "select * from ingrediente where nombre = '" + cbxProductos.getSelectedItem() + "'";
-        Statement st;
-        try {
-            Connection c = Conexion.Conectar();
-            st = c.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                codigoIngrediente = rs.getString("codigo");
-            }
-            c.close();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener codigo de ingrediente");
-        }
-
-        return codigoIngrediente;
-    }
-    
-    // cargar proveedores
-    private String obtenerCodigoCategoria() {
-        String query = "select * from categoriaingrediente where nombre = '" + cbxCategoria.getSelectedItem() + "'";
-        Statement st;
-        try {
-            Connection c = Conexion.Conectar();
-            st = c.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                codigoCategoria = rs.getString("codigo");
-            }
-            c.close();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener codigo de categoriaingrediente");
-        }
-
-        return codigoCategoria;
-    }
-    // Obtener codigo proveedor
-
-    private void actualizarIngrediente() {
-        if (cbxProductos.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Error: Elegir producto.");
-        } else {
-            if (cbxCategoria.getSelectedIndex() == 0 || txtTiempo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Error: Elegir la categoría.");
-            } else {
-                if (cbxProveedor.getSelectedIndex() != 0) {
-                    Ingrediente ingre = new Ingrediente();
-                    C_Ingrediente c_ingre = new C_Ingrediente();
-                    ingre.setCodCategoria(obtenerCodigoCategoria());
-                    ingre.setCodProveedor(obtenerCodigoProveedor());
-                    if (cbxTiempo.getSelectedIndex() == 1) {
-                        int n = Integer.parseInt(txtTiempo.getText()) * 30;
-                        ingre.setVencimiento(n);
-                    } else {
-                        ingre.setVencimiento(Integer.parseInt(txtTiempo.getText()));
-                    }
-                    if (c_ingre.actualizarIngrediente(ingre, codigoIngrediente)) {
-                        JOptionPane.showMessageDialog(null, "producto actualizado.");
-                        cbxProductos.setSelectedIndex(0);
-                        cbxCategoria.setSelectedIndex(0);
-                        cbxProveedor.setSelectedIndex(0);
-                        txtTiempo.setText(null);
-                        cbxTiempo.setSelectedIndex(0);
-                        cbxProductos.requestFocus();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error al actualizar producto.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error: Elige un proveedor.");
-                }
-            }
-        }
-    }
     private void cargarCategorias() {
         Connection c = Conexion.Conectar();
         String sql = "select * from categoriaingrediente ";
@@ -356,28 +280,80 @@ public class formActualizarIngrediente extends javax.swing.JFrame {
             System.out.println("Error al cargar categorias" + e.getMessage());
         }
     }
-    private void actualizarCategorias() {
+
+    private void cargarProveedores() {
         Connection c = Conexion.Conectar();
-        String sql = "select * from categoriaingrediente ";
-        int i=1;
+        String sql = "select * from Proveedor";
         Statement st;
         try {
             st = c.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {                
-                if(rs.getString(1).equals(obtenerCodigoCategoriaProducto())){
-                    System.out.println("entro");
-                    cbxCategoria.setSelectedIndex(i);
-                }
-                i++;
+            cbxProveedor.removeAllItems();
+            cbxProveedor.addItem("Seleccione Proveedor:");
+            while (rs.next()) {
+                cbxProveedor.addItem(rs.getString("nombre"));
             }
-            
             c.close();
         } catch (SQLException e) {
-            System.out.println("Error al actualizar categorias" + e.getMessage());
+            System.out.println("Error al cargar categorias" + e.getMessage());
         }
     }
-    
+
+    //obtener el codigo de categoria segun el ingre
+    private String obtenerCodigoCategoriaProveedorProducto(String palabra) {
+        String query = "select * from ingrediente where nombre = '" + (String) cbxProductos.getSelectedItem() + "'";
+        Statement st;
+        String cod = "";
+        try {
+            Connection c = Conexion.Conectar();
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                cod = rs.getString(palabra);
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener codigo de ingrediente");
+        }
+
+        return cod;
+    }
+
+    private void obtenerCodigoIngrediente() {
+        String query = "select * from ingrediente where nombre = '" + cbxProductos.getSelectedItem() + "'";
+        Statement st;
+        try {
+            Connection c = Conexion.Conectar();
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                codigoIngrediente = rs.getString("codigo");
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener codigo de ingrediente");
+        }
+    }
+
+    private String obtenerCodigoCategoria() {
+        String query = "select * from categoriaingrediente where nombre = '" + cbxCategoria.getSelectedItem() + "'";
+        Statement st;
+        String cod = "";
+        try {
+            Connection c = Conexion.Conectar();
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                cod = rs.getString("codigo");
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener codigo de categoriaingrediente");
+        }
+
+        return cod;
+    }
+
     private String obtenerCodigoProveedor() {
         String query = "select * from proveedor where nombre = '" + cbxProveedor.getSelectedItem() + "'";
         Statement st;
@@ -393,14 +369,96 @@ public class formActualizarIngrediente extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Error al obtener codigo de categoriaingrediente");
         }
-
         return codigoProveedor;
     }
+
+    private void actualizarIngrediente() {
+        if (cbxProductos.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Error: Elegir producto.");
+        } else {
+            if (cbxCategoria.getSelectedIndex() == 0 ) {
+                JOptionPane.showMessageDialog(null, "Error: Elegir la categoría.");
+            } else {
+                if (cbxProveedor.getSelectedIndex() == 0 ) {
+                    JOptionPane.showMessageDialog(null, "Error: Elegir el proveedor.");
+                } else {
+                    if (txtTiempo.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Error: Elegir el tiempo.");
+                    } else {
+                        Ingrediente ingre = new Ingrediente();
+                        C_Ingrediente c_ingre = new C_Ingrediente();
+                        ingre.setCodCategoria(obtenerCodigoCategoria());
+                        ingre.setCodProveedor(obtenerCodigoProveedor());
+                        if (cbxTiempo.getSelectedIndex() == 1) {
+                            int n = Integer.parseInt(txtTiempo.getText()) * 30;
+                            ingre.setVencimiento(n);
+                        } else {
+                            ingre.setVencimiento(Integer.parseInt(txtTiempo.getText()));
+                        }
+                        if (c_ingre.actualizarIngrediente(ingre, codigoIngrediente)) {
+                            JOptionPane.showMessageDialog(null, "Los datos del ingrediente ha sido actualizado.");
+                            cbxProductos.setSelectedIndex(0);
+                            cbxCategoria.setSelectedIndex(0);
+                            cbxProveedor.setSelectedIndex(0);
+                            txtTiempo.setText("");
+                            cbxTiempo.setSelectedIndex(0);
+                            cbxProductos.requestFocus();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al actualizar producto.");
+                        }
+                    }
+                }
+            }
+        }
+    }
     
-    // Cargar proveedor falta
+
+    private void actualizarCategorias() {
+        Connection c = Conexion.Conectar();
+        String sql = "select * from categoriaingrediente ";
+        int i = 1;
+        Statement st;
+        try {
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if (rs.getString(1).equals(obtenerCodigoCategoriaProveedorProducto("codigoCat"))) {
+                    cbxCategoria.setSelectedIndex(i);
+                }
+                i++;
+            }
+
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar categorias" + e.getMessage());
+        }
+    }
+
+    private void actualizarProveedor() {
+        Connection c = Conexion.Conectar();
+        String sql = "select * from Proveedor ";
+        int i = 1;
+        Statement st;
+        try {
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if (rs.getString(1).equals(obtenerCodigoCategoriaProveedorProducto("codigoPro"))) {
+                    cbxProveedor.setSelectedIndex(i);
+                }
+                i++;
+            }
+
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar categorias" + e.getMessage());
+        }
+    }
+
     private void actualizarTiempo() {
         Connection c = Conexion.Conectar();
-        String sql = "select * from ingrediente where codigo='"+obtenerCodigoIngrediente()+"'";
+        obtenerCodigoIngrediente();
+        String sql = "select * from ingrediente where codigo='" + codigoIngrediente + "'";
         Statement st;
         try {
             st = c.createStatement();
@@ -410,7 +468,7 @@ public class formActualizarIngrediente extends javax.swing.JFrame {
             txtTiempo.setText(rs.getString("vencimiento"));
             c.close();
         } catch (SQLException e) {
-            System.out.println("Error al cargar tiempo" + e.getMessage());
+            System.out.println("Error o no owo " + e.getMessage());
         }
     }
 

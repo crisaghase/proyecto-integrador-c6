@@ -48,16 +48,19 @@ public class formRegistrarEmpleado extends javax.swing.JFrame {
             usuario.setEdad(txtEdad.getText());
             usuario.setSexo(seleccion);
 
-            if (cu.RegistroUsuario(usuario)) {
-                if (cu.existeUsuario(txtNombre.getText()) == false) {
-                    JOptionPane.showMessageDialog(null, "Registro completado.");
+           
+                if (cu.existeUsuario(txtUsuario.getText())) {
+                    JOptionPane.showMessageDialog(null, "Registro completado."); 
+                    if (cu.RegistroUsuario(usuario)) { 
+                        limpiar();
+                    } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo registrar nuevo usuario.");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Usuario ya existe, actualice stock.");
+                    JOptionPane.showMessageDialog(null, "Usuario ya existe.");
                 }
-                limpiar();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo registrar nuevo usuario.");
-            }
+                
+            
         }
     }
 

@@ -1213,7 +1213,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
             c.close();
         } catch (SQLException e) {
-            System.out.println("Error al cargar los productos a la tabla.");
+            System.out.println("Error al cargar los ingredientes a la tabla.");
         }
     }
   

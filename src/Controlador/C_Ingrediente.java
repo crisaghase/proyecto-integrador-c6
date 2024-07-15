@@ -1,11 +1,15 @@
 package Controlador;
 
+import Modelo.CategoriaProducto;
 import Modelo.Ingrediente;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class C_Ingrediente {
@@ -101,5 +105,62 @@ public class C_Ingrediente {
         }
 
         return estado;
+    }
+    
+    public List<Ingrediente> buscarIngrediente (String nombre, String atri){
+        List<Ingrediente> lista = new ArrayList();
+        Ingrediente ing;
+        Connection c = Conexion.Conectar();
+        String sql = "SELECT * FROM ingrediente WHERE "+atri+" LIKE '%"+nombre+"%'";
+        Statement st;
+        try {
+            
+            st=c.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {      
+                ing = new Ingrediente();          
+                ing.setCodigo(rs.getString(1));
+                ing.setNombre(rs.getString(2));
+                ing.setStock(rs.getInt(3));
+                ing.setCodCategoria(rs.getString(4));
+                ing.setCodProveedor(rs.getString(5));
+                ing.setVencimiento(rs.getInt(6));
+               lista.add(ing);
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al revisar si existe Ingredientes" + e.getMessage());
+        }
+        
+        return lista;
+    }
+    
+    public List<Ingrediente> buscarFecha (Date fecha){
+        List<Ingrediente> lista = new ArrayList();
+        Ingrediente ing;
+        Connection c = Conexion.Conectar();
+        String sql = "SELECT e.codigo, e.nombre, e.stock, e.codigoCat, e.codigoPro, e.vencimiento FROM ingrediente e inner join Ingreso o ON e.codigo = o.codigoIng WHERE o.fechaVen = ? order by o.codigo ";
+        PreparedStatement st;
+        try {
+            st=c.prepareStatement(sql);
+            st.setDate(1, fecha);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {      
+                ing = new Ingrediente();          
+                ing.setCodigo(rs.getString(1));
+                System.out.println(ing.getCodigo());
+                ing.setNombre(rs.getString(2));
+                ing.setStock(rs.getInt(3));
+                ing.setCodCategoria(rs.getString(4));
+                ing.setCodProveedor(rs.getString(5));
+                ing.setVencimiento(rs.getInt(6));
+               lista.add(ing);
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al revisar si existe Ingredientes" + e.getMessage());
+        }
+        
+        return lista;
     }
 }

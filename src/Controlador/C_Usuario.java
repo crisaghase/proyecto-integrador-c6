@@ -111,9 +111,24 @@ public class C_Usuario extends BaseQuery {
 //        return estado;
 //    }
     
-    public boolean existeUsuario(String codigo){
-        String x = queryDatos("codigo", "Empleado", codigo);
-        return x.isEmpty() == false;
+    public boolean existeUsuario(String usuario){
+        Connection c = Conexion.Conectar();
+        String sql = "select * from Credenciales ";
+        boolean existe = true ;
+        Statement st;
+        try {
+            st = c.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if (rs.getString(3).equals(usuario)) {
+                    existe = false;
+                }
+            }
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Error al revisar si existe usuario" + e.getMessage());
+        }
+        return existe;
     }
     
     
