@@ -22,6 +22,8 @@ import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class formMenuPrincipal extends javax.swing.JFrame {
     
@@ -32,10 +34,12 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         // Cargar Historial
         cargarHistorialRecetas();
 
+        // Registra seleccion de historial para ver detalle
+        registrarEventoSeleccionTablaHistorial();
+        
         // Ventana Productos
         cargarTablaIngredientes();
         cargarTotalProductos();
-        
         
         //Ventana Empleado
         cargarTablaEmpleados();
@@ -43,7 +47,8 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         Fondo = new javax.swing.JPanel();
         Botones = new javax.swing.JPanel();
@@ -75,6 +80,9 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         jScrollPaneHistorial = new javax.swing.JScrollPane();
         tableHistorial = new javax.swing.JTable();
+        jScrollPaneDetalle = new javax.swing.JScrollPane();
+        tableDetalle = new javax.swing.JTable();
+        btnHistorialReporte = new javax.swing.JButton();
         jPanelVentanaVentas = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         Pastel_1 = new javax.swing.JPanel();
@@ -127,8 +135,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnVender.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnVender.setText("Ventas");
         btnVender.setPreferredSize(new java.awt.Dimension(180, 40));
-        btnVender.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnVender.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnVenderActionPerformed(evt);
             }
         });
@@ -137,8 +147,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnIngresos.setText("Ingresos");
         btnIngresos.setToolTipText("");
         btnIngresos.setPreferredSize(new java.awt.Dimension(180, 40));
-        btnIngresos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnIngresos.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnIngresosActionPerformed(evt);
             }
         });
@@ -146,8 +158,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnProductos.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnProductos.setText("Ingrediente");
         btnProductos.setPreferredSize(new java.awt.Dimension(180, 40));
-        btnProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnProductos.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnProductosActionPerformed(evt);
             }
         });
@@ -155,8 +169,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnCerrarSesion.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
         btnCerrarSesion.setText("Cerrar Sesión");
         btnCerrarSesion.setPreferredSize(new java.awt.Dimension(180, 40));
-        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnCerrarSesionActionPerformed(evt);
             }
         });
@@ -177,8 +193,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnEmpleados.setText("Empleados");
         btnEmpleados.setToolTipText("");
         btnEmpleados.setPreferredSize(new java.awt.Dimension(180, 40));
-        btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnEmpleados.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnEmpleadosActionPerformed(evt);
             }
         });
@@ -253,15 +271,18 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         jTableProductos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTableProductos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
 
             },
-            new String [] {
+            new String []
+            {
                 "CODIGO", "NOMBRE", "STOCK", "COD CAT", "COD PRO", "VENCIMIENTO"
             }
         ));
         jScrollPaneProductos.setViewportView(jTableProductos);
-        if (jTableProductos.getColumnModel().getColumnCount() > 0) {
+        if (jTableProductos.getColumnModel().getColumnCount() > 0)
+        {
             jTableProductos.getColumnModel().getColumn(5).setResizable(false);
         }
 
@@ -274,8 +295,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnRegistrarProducto4.setText("Reportes");
         btnRegistrarProducto4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnRegistrarProducto4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRegistrarProducto4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnRegistrarProducto4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnRegistrarProducto4ActionPerformed(evt);
             }
         });
@@ -286,8 +309,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnNuevaCategoriaProducto.setText("Nueva Categoria");
         btnNuevaCategoriaProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnNuevaCategoriaProducto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNuevaCategoriaProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnNuevaCategoriaProducto.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnNuevaCategoriaProductoActionPerformed(evt);
             }
         });
@@ -298,8 +323,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnCategoriaProductos.setText("Categorias");
         btnCategoriaProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCategoriaProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCategoriaProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnCategoriaProductos.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnCategoriaProductosActionPerformed(evt);
             }
         });
@@ -310,8 +337,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnRegistrarProducto.setText("Registrar");
         btnRegistrarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnRegistrarProducto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRegistrarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnRegistrarProducto.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnRegistrarProductoActionPerformed(evt);
             }
         });
@@ -322,8 +351,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnActualizarProducto.setText("Actualizar");
         btnActualizarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnActualizarProducto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnActualizarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnActualizarProducto.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnActualizarProductoActionPerformed(evt);
             }
         });
@@ -334,8 +365,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         txtTotalProductos.setEditable(false);
         txtTotalProductos.setBackground(new java.awt.Color(255, 255, 255));
         txtTotalProductos.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        txtTotalProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        txtTotalProductos.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 txtTotalProductosActionPerformed(evt);
             }
         });
@@ -422,14 +455,40 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tableHistorial.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
 
             },
-            new String [] {
+            new String []
+            {
 
             }
         ));
+        tableHistorial.setColumnSelectionAllowed(true);
         jScrollPaneHistorial.setViewportView(tableHistorial);
+        tableHistorial.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        tableDetalle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+
+            },
+            new String []
+            {
+
+            }
+        ));
+        jScrollPaneDetalle.setViewportView(tableDetalle);
+
+        btnHistorialReporte.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        btnHistorialReporte.setText("Reportes");
+        btnHistorialReporte.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnHistorialReporteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -437,14 +496,24 @@ public class formMenuPrincipal extends javax.swing.JFrame {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 1170, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(jScrollPaneHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPaneDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnHistorialReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPaneDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneHistorial))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnHistorialReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanelVentanaHistorialLayout = new javax.swing.GroupLayout(jPanelVentanaHistorial);
@@ -474,8 +543,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(139, 120, 162));
 
-        btnPastelZanahoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnPastelZanahoria.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnPastelZanahoriaActionPerformed(evt);
             }
         });
@@ -508,8 +579,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
                 .addGap(0, 35, Short.MAX_VALUE))
         );
 
-        btnPastelMaracuya.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnPastelMaracuya.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnPastelMaracuyaActionPerformed(evt);
             }
         });
@@ -541,8 +614,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        btnPastelChocolate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnPastelChocolate.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnPastelChocolateActionPerformed(evt);
             }
         });
@@ -584,14 +659,18 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnHistorialVentas.setToolTipText("");
         btnHistorialVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnHistorialVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnHistorialVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnHistorialVentas.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnHistorialVentasActionPerformed(evt);
             }
         });
 
-        btnPastelCentral.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnPastelCentral.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnPastelCentralActionPerformed(evt);
             }
         });
@@ -623,8 +702,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        btnPastelFresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnPastelFresa.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnPastelFresaActionPerformed(evt);
             }
         });
@@ -654,8 +735,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
                 .addGap(0, 23, Short.MAX_VALUE))
         );
 
-        btnPastelVelvet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnPastelVelvet.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnPastelVelvetActionPerformed(evt);
             }
         });
@@ -753,15 +836,18 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         jTableProductos4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTableProductos4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTableProductos4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
 
             },
-            new String [] {
+            new String []
+            {
                 "CODIGO", "NOMBRE", "DESCRIPCION", "PRECIO", "STOCK", "CATEGORIA"
             }
         ));
         jScrollPaneProductos4.setViewportView(jTableProductos4);
-        if (jTableProductos4.getColumnModel().getColumnCount() > 0) {
+        if (jTableProductos4.getColumnModel().getColumnCount() > 0)
+        {
             jTableProductos4.getColumnModel().getColumn(5).setResizable(false);
         }
 
@@ -774,8 +860,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnRegistrarIngreso.setText("Registrar Ingreso");
         btnRegistrarIngreso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnRegistrarIngreso.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRegistrarIngreso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnRegistrarIngreso.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnRegistrarIngresoActionPerformed(evt);
             }
         });
@@ -786,8 +874,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnReporteIngreso.setText("Reportes");
         btnReporteIngreso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnReporteIngreso.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnReporteIngreso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnReporteIngreso.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnReporteIngresoActionPerformed(evt);
             }
         });
@@ -829,23 +919,30 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
         tblEmpleados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
 
             },
-            new String [] {
+            new String []
+            {
                 "Codigo", "Usuario", "Contraseña", "Nombre", "Apellido", "Telefono", "Edad", "Sexo"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
+        )
+        {
+            boolean[] canEdit = new boolean []
+            {
                 false, false, false, false, false, false, false, false
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return canEdit [columnIndex];
             }
         });
-        tblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        tblEmpleados.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 tblEmpleadosMouseClicked(evt);
             }
         });
@@ -855,8 +952,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnRegistrarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnRegistrarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarEmpleado.setText("Registrar Usuario");
-        btnRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnRegistrarEmpleadoActionPerformed(evt);
             }
         });
@@ -865,8 +964,10 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         btnEliminarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnEliminarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarEmpleado.setText("Eliminar Usuario");
-        btnEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnEliminarEmpleado.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnEliminarEmpleadoActionPerformed(evt);
             }
         });
@@ -1148,6 +1249,13 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         cargarTablaEmpleados();
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
+    private void btnHistorialReporteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnHistorialReporteActionPerformed
+    {//GEN-HEADEREND:event_btnHistorialReporteActionPerformed
+        formReporteHistorial reporteHistorial = new formReporteHistorial();
+        reporteHistorial.setVisible(true);
+        reporteHistorial.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnHistorialReporteActionPerformed
+
     // Permite activar SOLO el panel seleccionado
     private void abrirPanel(JPanel panel) {
         jPanelVentanaVentas.setVisible(false);
@@ -1171,7 +1279,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
     private void actualizarTablaPreparaciones(List<HistorialReceta> lista) {
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Código Receta", "Nombre Pastel", "Fecha de Preparación"});
+        model.setColumnIdentifiers(new String[]{"Código", "Nombre Pastel", "Fecha de Preparación"});
 
         jScrollPaneHistorial.setViewportView(tableHistorial);        
         for (HistorialReceta preparacion : lista) {
@@ -1181,6 +1289,48 @@ public class formMenuPrincipal extends javax.swing.JFrame {
         tableHistorial.setModel(model);
     }
 
+    private void registrarEventoSeleccionTablaHistorial(){
+        // Agregar ListSelectionListener a la tabla de historial
+        tableHistorial.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    int selectedRow = tableHistorial.getSelectedRow();
+                    if (selectedRow != -1) {
+                        String codigoReceta = tableHistorial.getValueAt(selectedRow, 0).toString().trim();
+                        System.out.println(codigoReceta);
+                        cargarIngredientesParaReceta(codigoReceta);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void cargarIngredientesParaReceta(String codigoReceta) {
+        // Obtener detalles de la receta
+        C_Receta c_Receta = new C_Receta();
+        List<DetalleReceta> detallesReceta = c_Receta.obtenerDetallesRecetaPorCodigoHistorial(codigoReceta);
+
+        // Actualizar la tabla de ingredientes
+        actualizarTablaIngredientes(detallesReceta);
+    }
+    
+    private void actualizarTablaIngredientes(List<DetalleReceta> detallesReceta) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Código Ingrediente", "Cantidad Requerida"});
+
+        jScrollPaneDetalle.setViewportView(tableDetalle);
+        for (DetalleReceta detalle : detallesReceta) {
+            System.out.println("Detalle: " + detalle.getCodigoDetalleReceta());
+            model.addRow(new Object[]{
+                detalle.getCodigoIngrediente(),
+                detalle.getCantidad(),
+            });
+        }
+
+        tableDetalle.setModel(model);
+}
+    
     // </editor-fold> 
 
     
@@ -1226,7 +1376,6 @@ public class formMenuPrincipal extends javax.swing.JFrame {
 
     }
     // </editor-fold> 
-    
     
     // <editor-fold defaultstate="collapsed" desc="Ventas">
     
@@ -1315,7 +1464,6 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     }
     
     // </editor-fold> 
-    
      
     // <editor-fold defaultstate="collapsed" desc="Usuario">
 
@@ -1431,6 +1579,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnCategoriaProductos;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnEliminarEmpleado;
+    private javax.swing.JButton btnHistorialReporte;
     private javax.swing.JButton btnHistorialVentas;
     private javax.swing.JButton btnNuevaCategoriaProducto;
     private javax.swing.JButton btnPastelCentral;
@@ -1471,12 +1620,14 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelVentanaIngresos;
     private javax.swing.JPanel jPanelVentanaProductos;
     private javax.swing.JPanel jPanelVentanaVentas;
+    private javax.swing.JScrollPane jScrollPaneDetalle;
     private javax.swing.JScrollPane jScrollPaneHistorial;
     private javax.swing.JScrollPane jScrollPaneProductos;
     private javax.swing.JScrollPane jScrollPaneProductos4;
     private javax.swing.JScrollPane jScrollPanelEmpleados;
     private javax.swing.JTable jTableProductos;
     private javax.swing.JTable jTableProductos4;
+    private javax.swing.JTable tableDetalle;
     private javax.swing.JTable tableHistorial;
     private javax.swing.JTable tblEmpleados;
     private javax.swing.JLabel titulo;

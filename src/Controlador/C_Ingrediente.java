@@ -63,7 +63,7 @@ public class C_Ingrediente {
         
         return lista;
     }
-
+    
     private String getUltimoCodigo() {
         String cod = "";
         Connection c = Conexion.Conectar();

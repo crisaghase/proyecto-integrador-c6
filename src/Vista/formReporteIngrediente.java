@@ -26,7 +26,8 @@ public class formReporteIngrediente extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -60,56 +61,70 @@ public class formReporteIngrediente extends javax.swing.JFrame {
         tbIngredientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tbIngredientes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tbIngredientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
 
             },
-            new String [] {
+            new String []
+            {
                 "CODIGO", "NOMBRE", "STOCK", "COD CAT", "COD PRO", "VENCIMIENTO"
             }
         ));
         jScrollPaneIngredientes.setViewportView(tbIngredientes);
 
         txtBuscarProv.setToolTipText("");
-        txtBuscarProv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        txtBuscarProv.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 txtBuscarProvActionPerformed(evt);
             }
         });
 
         txtBuscarIng.setToolTipText("");
-        txtBuscarIng.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        txtBuscarIng.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 txtBuscarIngActionPerformed(evt);
             }
         });
 
         txtBuscarCat.setToolTipText("");
-        txtBuscarCat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        txtBuscarCat.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 txtBuscarCatActionPerformed(evt);
             }
         });
 
         btnBuscarIng.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnBuscarIng.setText("Buscar");
-        btnBuscarIng.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnBuscarIng.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnBuscarIngActionPerformed(evt);
             }
         });
 
         btnBuscarCat.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnBuscarCat.setText("Buscar");
-        btnBuscarCat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnBuscarCat.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnBuscarCatActionPerformed(evt);
             }
         });
 
         btnBuscarPro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnBuscarPro.setText("Buscar");
-        btnBuscarPro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnBuscarPro.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnBuscarProActionPerformed(evt);
             }
         });
@@ -128,16 +143,20 @@ public class formReporteIngrediente extends javax.swing.JFrame {
 
         btnAbrirPDF.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAbrirPDF.setText("Abrir PDF");
-        btnAbrirPDF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAbrirPDF.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnAbrirPDFActionPerformed(evt);
             }
         });
 
         btnExpPDF.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnExpPDF.setText("Exportar PDF");
-        btnExpPDF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnExpPDF.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnExpPDFActionPerformed(evt);
             }
         });
@@ -150,8 +169,10 @@ public class formReporteIngrediente extends javax.swing.JFrame {
 
         btnBuscarFec.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnBuscarFec.setText("Buscar");
-        btnBuscarFec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnBuscarFec.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnBuscarFecActionPerformed(evt);
             }
         });

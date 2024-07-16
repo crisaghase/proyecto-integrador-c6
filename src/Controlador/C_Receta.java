@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.DetalleReceta;
+import Modelo.HistorialReceta;
 import Modelo.Ingrediente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -156,7 +157,81 @@ public class C_Receta extends BaseQuery {
 
         return detallesReceta;
     }
+    
+    // Obtiene lista de DetalleReceta usando el codigo del historial
+    public List<DetalleReceta> obtenerDetallesRecetaPorCodigoHistorial(String codigoHistorial) {
+        List<DetalleReceta> detallesReceta = new ArrayList<>();
 
+        Connection conn = Conexion.Conectar();
+        String query = "SELECT d.cantidad, i.codigo "
+                + "FROM DetalleReceta d "
+                + "JOIN Ingrediente i ON d.codigoIng = i.codigo "
+                + "JOIN HistorialReceta hr ON hr.codigoRec = d.codigoRec "
+                + "WHERE hr.codigo = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, codigoHistorial);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                DetalleReceta detalle = new DetalleReceta();
+                detalle.setCantidad(rs.getInt(1));
+                detalle.setCodigoIngrediente(rs.getString(2));
+                detallesReceta.add(detalle);
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener detalles de la receta: " + e.getMessage());
+        }
+
+        return detallesReceta;
+    }
+
+    // Usado en formReporteHistorial, busca un historial en base a fecha o codigo
+    public  List<HistorialReceta> buscarHistorialReceta(String fecha, String codigoHistorial) {
+        List<HistorialReceta> listaPreparaciones = new ArrayList<>();
+        Connection conn = Conexion.Conectar();
+        String query = "SELECT HR.codigo, R.nombre, HR.fecha FROM HistorialReceta HR "
+                + "INNER JOIN Receta R ON HR.codigoRec = R.codigo WHERE 1=1";
+
+        if (!fecha.isEmpty()) {
+            query += " AND HR.fecha = ?";
+        }
+        if (!codigoHistorial.isEmpty()) {
+            query += " AND HR.codigo = ?";
+        }
+        query += " ORDER BY HR.fecha ASC";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            int paramIndex = 1;
+            if (!fecha.isEmpty()) {
+                ps.setString(paramIndex++, fecha);
+            }
+            if (!codigoHistorial.isEmpty()) {
+                ps.setString(paramIndex, codigoHistorial);
+            }
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String codigoReceta = rs.getString("codigo");
+                String nombrePastel = rs.getString("nombre");
+                String fechaPreparacion = rs.getString("fecha");
+
+                HistorialReceta preparacion = new HistorialReceta(codigoReceta, nombrePastel, fechaPreparacion);
+                listaPreparaciones.add(preparacion);
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cargar datos de historial: " + e.getMessage());
+        }
+
+        return listaPreparaciones;
+    }
+    
     // Método para actualizar el inventario de ingredientes en la base de datos
     public  boolean actualizarInventario(List<DetalleReceta> detallesReceta) {
         boolean exito = false;
