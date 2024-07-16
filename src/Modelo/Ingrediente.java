@@ -9,6 +9,10 @@ public class Ingrediente {
     private String codProveedor;
     private int vencimiento;
 
+    public Ingrediente() {
+        
+    }
+    
     public Ingrediente(String codigo, String nombre, int stock, int stock_min, String codCategoria, String codProveedor, int vencimiento) {
         this.codigo = codigo;
         this.nombre = nombre;

@@ -407,7 +407,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
-                                  <Component id="btnRegistrarProducto4" min="-2" pref="190" max="-2" attributes="0"/>
+                                  <Component id="btnReporteProductos" min="-2" pref="190" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -435,7 +435,7 @@
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnRegistrarProducto4" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnReporteProductos" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jScrollPaneProductos" pref="484" max="32767" attributes="0"/>
@@ -533,7 +533,7 @@
                     <Property name="text" type="java.lang.String" value="Ingrediente"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnRegistrarProducto4">
+                <Component class="javax.swing.JButton" name="btnReporteProductos">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="a2" green="78" red="8b" type="rgb"/>
@@ -551,7 +551,7 @@
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarProducto4ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteProductosActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnNuevaCategoriaProducto">
