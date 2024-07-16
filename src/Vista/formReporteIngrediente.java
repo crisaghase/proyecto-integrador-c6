@@ -7,7 +7,8 @@ import Modelo.Ingrediente;
 import Modelo.Plantilla;
 import java.awt.Desktop;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -320,7 +321,7 @@ public class formReporteIngrediente extends javax.swing.JFrame {
     private void btnBuscarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProActionPerformed
         lista = ci.buscarIngrediente(txtBuscarProv.getText(), "codigoPro");
         BuscarCodIngrediente(lista);
-         titulo = "Lista de Ingredientes segun el Codigo Proveedor";
+        titulo = "Lista de Ingredientes segun el Codigo Proveedor";
     }//GEN-LAST:event_btnBuscarProActionPerformed
 
     private void btnAbrirPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirPDFActionPerformed
@@ -328,8 +329,9 @@ public class formReporteIngrediente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAbrirPDFActionPerformed
 
     private void btnExpPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpPDFActionPerformed
-        Plantilla plantilla = new Plantilla(titulo);
-        plantilla.crearPlantilla("lista"+i,titulo,lista);
+        Plantilla plantilla = new Plantilla(titulo, getFecha());
+        System.out.println(getFecha());
+        plantilla.crearPlantillaIngrediente("listaDeIngrediente" + i, lista);
         i++;
     }//GEN-LAST:event_btnExpPDFActionPerformed
 
@@ -379,7 +381,7 @@ public class formReporteIngrediente extends javax.swing.JFrame {
 
     private void cargarTablaIngredientes() {
         Connection c = Conexion.Conectar();
-        lista= ci.getListaIngredientes();
+        lista = ci.getListaIngredientes();
         DefaultTableModel model = new DefaultTableModel();
         String query = "select * from Ingrediente";
         try {
@@ -395,7 +397,7 @@ public class formReporteIngrediente extends javax.swing.JFrame {
             model.addColumn("Vencimiento");
             while (rs.next()) {
                 Object[] data = new Object[6];
-                
+
                 for (int i = 0; i < 6; i++) {
                     data[i] = rs.getObject(i + 1);
                 }
@@ -429,18 +431,53 @@ public class formReporteIngrediente extends javax.swing.JFrame {
             data[5] = (Object) x.getVencimiento();
             model.addRow(data);
         }
-       
+
     }
-    
-     public void abrir(){
-         int cont = i-1;   
-         try {
-                File path = new File("lista"+cont+".pdf");
-                Desktop.getDesktop().open(path);
-         } catch (Exception e) {
-             System.out.println("Error al abrir el documento."+e.getMessage());
-         }
+
+    public String getFecha() {
+        GregorianCalendar gcal = new GregorianCalendar();
+        int d = gcal.get(Calendar.DAY_OF_MONTH);
+        int m = gcal.get(Calendar.MONTH);
+        int y = gcal.get(Calendar.YEAR);
+        int h = gcal.get(Calendar.HOUR_OF_DAY);
+        int min = gcal.get(Calendar.MINUTE);
+        m += 1;
+        String mo;
+        String di;
+        String ho;
+        String minu;
+        if (m < 10) {
+            mo = "0" + m;
+        } else {
+            mo = String.valueOf(m);
         }
+        if (d < 10) {
+            di = "0" + d;
+        } else {
+            di = String.valueOf(d);
+        }
+        if (h < 10) {
+            ho = "0" + h;
+        } else {
+            ho = String.valueOf(h);
+        }
+        if (min < 10) {
+            minu = "0" + min;
+        } else {
+            minu = String.valueOf(min);
+        }
+        return di + "/" + mo + "/" + y + " - " + ho + ":" + minu;
+    }
+
+    public void abrir() {
+        int cont = i - 1;
+        try {
+            File path = new File("listaDeIngrediente" + cont + ".pdf");
+            Desktop.getDesktop().open(path);
+        } catch (Exception e) {
+            System.out.println("Error al abrir el documento." + e.getMessage());
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

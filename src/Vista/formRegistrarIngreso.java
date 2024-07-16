@@ -37,6 +37,8 @@ public class formRegistrarIngreso extends javax.swing.JFrame {
             Statement st = c.createStatement();
             ResultSet rs = st.executeQuery(query);
 
+            cbxproductos.addItem("Seleccionar");
+
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 cbxproductos.addItem(nombre);
@@ -89,6 +91,11 @@ public class formRegistrarIngreso extends javax.swing.JFrame {
         jLabel4.setText("Cantidad:");
 
         txtcantidadingreso.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtcantidadingreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcantidadingresoActionPerformed(evt);
+            }
+        });
 
         registrar_ingreso.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         registrar_ingreso.setText("Registrar");
@@ -170,16 +177,33 @@ public class formRegistrarIngreso extends javax.swing.JFrame {
     private void registrar_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrar_ingresoActionPerformed
        registrar ();
     }//GEN-LAST:event_registrar_ingresoActionPerformed
+
+    private void txtcantidadingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcantidadingresoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcantidadingresoActionPerformed
     
     
      private void registrar() {
-        if (cbxproductos.getSelectedItem() != null && !txtcantidadingreso.getText().equals("")) {
+       if (cbxproductos.getSelectedItem() != null && !txtcantidadingreso.getText().equals("")) {
             try {
                 String nombreProducto = cbxproductos.getSelectedItem().toString();
+
+                if (nombreProducto.equals("Seleccionar")) {
+                    JOptionPane.showMessageDialog(this, "Debe seleccionar un producto válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                }
+                
+                String cantidadTexto = txtcantidadingreso.getText().trim();
+                if (!cantidadTexto.matches("\\d+")) { 
+                    JOptionPane.showMessageDialog(this, "La cantidad ingresada no es válida. Debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                }
+                
                 String codigoProducto = obtenerCodigoProducto(nombreProducto);
+                int cantidad = Integer.parseInt(cantidadTexto);
+
                 int vencimientoDias = obtenerVencimientoDias(codigoProducto);
                 String codigoIngreso = generarCodigoIngreso();
-                int cantidad = Integer.parseInt(txtcantidadingreso.getText());
 
                 LocalDate fechaIngreso = LocalDate.now();
                 LocalDate fechaVencimiento = fechaIngreso.plus(vencimientoDias, ChronoUnit.DAYS);
@@ -191,12 +215,14 @@ public class formRegistrarIngreso extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "Error al registrar el ingreso.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "La cantidad ingresada no es válida. Debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                }
         } else {
-            JOptionPane.showMessageDialog(this, "Debe llenar o seleccionar una opción en todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+                    JOptionPane.showMessageDialog(this, "Debe llenar o seleccionar una opción en todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+                }
     }
 
     private String obtenerCodigoProducto(String nombreProducto) {

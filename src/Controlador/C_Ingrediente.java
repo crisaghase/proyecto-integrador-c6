@@ -16,7 +16,7 @@ public class C_Ingrediente {
     // Metodo que permite registrar un Ingrediente en la base de datos
     public boolean registrarIngrediente(Ingrediente ingrediente) {
         Connection c = Conexion.Conectar();
-        String query = "insert into Ingrediente values (?,?,?,?,?,?)";
+        String query = "insert into Ingrediente values (?,?,?,?,?,?,?)";
         boolean estado = false;
 
         try {
@@ -24,9 +24,10 @@ public class C_Ingrediente {
             consulta.setString(1, getUltimoCodigo());
             consulta.setString(2, ingrediente.getNombre());
             consulta.setInt(3, ingrediente.getStock());
-            consulta.setString(4, ingrediente.getCodCategoria());
-            consulta.setString(5, ingrediente.getCodProveedor());
-            consulta.setInt(6, ingrediente.getVencimiento());
+            consulta.setInt(4, ingrediente.getStock_min());
+            consulta.setString(5, ingrediente.getCodCategoria());
+            consulta.setString(6, ingrediente.getCodProveedor());
+            consulta.setInt(7, ingrediente.getVencimiento());
             if (consulta.executeUpdate() > 0) {
                 estado = true;
             }
@@ -51,9 +52,10 @@ public class C_Ingrediente {
                 i.setCodigo(rs.getString(1));
                 i.setNombre(rs.getString(2));
                 i.setStock(rs.getInt(3));
-                i.setCodCategoria(rs.getString(4));
-                i.setCodProveedor(rs.getString(5));
-                i.setVencimiento(rs.getInt(6));
+                i.setStock_min(rs.getInt(4));
+                i.setCodCategoria(rs.getString(5));
+                i.setCodProveedor(rs.getString(6));
+                i.setVencimiento(rs.getInt(7));
                 lista.add(i);
             }
         } catch (Exception e) {
@@ -110,7 +112,7 @@ public class C_Ingrediente {
         List<Ingrediente> lista = new ArrayList();
         Ingrediente ing;
         Connection c = Conexion.Conectar();
-        String sql = "SELECT * FROM ingrediente WHERE "+atri+" LIKE '%"+nombre+"%'";
+        String sql = "SELECT codigo,nombre,stock,codigoCat,codigoPro,vencimiento FROM ingrediente WHERE "+atri+" LIKE '%"+nombre+"%'";
         Statement st;
         try {
             

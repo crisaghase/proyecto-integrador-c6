@@ -1192,11 +1192,13 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private void btnRegistrarIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarIngresoActionPerformed
            formRegistrarIngreso c =  new formRegistrarIngreso();
            c.setVisible(true);
+           c.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnRegistrarIngresoActionPerformed
 
     private void btnReporteIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteIngresoActionPerformed
         Reporte_Ingreso ri = new Reporte_Ingreso();
         ri.setVisible(true);
+        ri.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnReporteIngresoActionPerformed
 
     private void btnHistorialVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialVentasActionPerformed
@@ -1247,6 +1249,7 @@ public class formMenuPrincipal extends javax.swing.JFrame {
     private void btnRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEmpleadoActionPerformed
         formRegistrarEmpleado re = new formRegistrarEmpleado();
         re.setVisible(true);
+        re.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnRegistrarEmpleadoActionPerformed
 
     private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed

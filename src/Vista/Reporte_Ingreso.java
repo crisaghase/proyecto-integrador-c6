@@ -7,6 +7,7 @@ package Vista;
 import Controlador.C_Ingreso;
 import Controlador.Conexion;
 import Modelo.Ingreso;
+import Modelo.Plantilla;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -14,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -26,44 +29,46 @@ public class Reporte_Ingreso extends javax.swing.JFrame {
 
     Connection c = Conexion.Conectar();
     DefaultTableModel modelo = new DefaultTableModel();
-   ArrayList<Ingreso> lista_ingresos = new ArrayList<>();
-   C_Ingreso i = new C_Ingreso ();
+    ArrayList<Ingreso> lista_ingresos = new ArrayList<>();
+    List<Ingreso> lista;
+    int cont = 1;
+    C_Ingreso i = new C_Ingreso();
+    String titulo = "Reporte de Ingresos";
 
-    
     public Reporte_Ingreso() {
         initComponents();
         PRODUCTOS();
         cabecera();
         Meses_Año();
     }
-    
-    private void PRODUCTOS() {
-    String query = "SELECT nombre FROM Ingrediente"; 
-    try {
-        Statement st = c.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        
-        cbxproductos.addItem("Seleccionar");
 
-        while (rs.next()) {
-            String nombre = rs.getString("nombre");
-            cbxproductos.addItem(nombre);
+    private void PRODUCTOS() {
+        String query = "SELECT nombre FROM Ingrediente";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            cbxproductos.addItem("Seleccionar");
+
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                cbxproductos.addItem(nombre);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cargar los ingresos en el JComboBox: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error al cargar los ingresos en el JComboBox: " + e.getMessage());
     }
-}
-    
+
     public void Meses_Año() {
         String[] dias = new String[31];
         for (int i = 0; i < 31; i++) {
             dias[i] = String.valueOf(i);
         }
-        cbxdias.setModel(new DefaultComboBoxModel<>(dias));       
-        cbxmeses.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccionar","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
-        cbxaño.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccionar","2023", "2024", "2025"}));
+        cbxdias.setModel(new DefaultComboBoxModel<>(dias));
+        cbxmeses.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccionar", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+        cbxaño.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccionar", "2023", "2024", "2025"}));
     }
-    
+
     private void cabecera() {
         modelo.addColumn("CODIGO");
         modelo.addColumn("PRODUCTO");
@@ -75,11 +80,6 @@ public class Reporte_Ingreso extends javax.swing.JFrame {
         tabla_busqueda.setModel(modelo);
 
     }
-    
-
-
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -193,6 +193,11 @@ public class Reporte_Ingreso extends javax.swing.JFrame {
 
         exportar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         exportar.setText("Exportar");
+        exportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -290,136 +295,189 @@ public class Reporte_Ingreso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxproductosActionPerformed
-      txtrealizados.setText("");
-      txtvencidos.setText("");
+        txtrealizados.setText("");
+        txtvencidos.setText("");
     }//GEN-LAST:event_cbxproductosActionPerformed
 
     private void generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarActionPerformed
 
-    modelo.setRowCount(0);
-    String diaSeleccionado = (String) cbxdias.getSelectedItem();
-    String mesSeleccionado = (String) cbxmeses.getSelectedItem();
-    String añoSeleccionado = (String) cbxaño.getSelectedItem();
-    String nombre_ingrediente = (String) cbxproductos.getSelectedItem();
-       
-    if (diaSeleccionado.equals("0") && mesSeleccionado.equals("Seleccionar") && añoSeleccionado.equals("Seleccionar") && nombre_ingrediente.equals("Seleccionar") )  {
-        JOptionPane.showMessageDialog(null, "Debe seleccionar una opción para hacer la busqueda");
-    } else if (diaSeleccionado.equals("0") && mesSeleccionado.equals("Seleccionar") && añoSeleccionado.equals("Seleccionar") && (!nombre_ingrediente.equals("Seleccionar"))) {
-       
-        lista_ingresos = i.ObtenerIngresosIngrediente(nombre_ingrediente);
+        modelo.setRowCount(0);
+        String diaSeleccionado = (String) cbxdias.getSelectedItem();
+        String mesSeleccionado = (String) cbxmeses.getSelectedItem();
+        String añoSeleccionado = (String) cbxaño.getSelectedItem();
+        String nombre_ingrediente = (String) cbxproductos.getSelectedItem();
 
-        for (Ingreso ingreso : lista_ingresos) {
+        if (diaSeleccionado.equals("0") && mesSeleccionado.equals("Seleccionar") && añoSeleccionado.equals("Seleccionar") && nombre_ingrediente.equals("Seleccionar")) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una opción para hacer la busqueda");
+        } else if (diaSeleccionado.equals("0") && mesSeleccionado.equals("Seleccionar") && añoSeleccionado.equals("Seleccionar") && (!nombre_ingrediente.equals("Seleccionar"))) {
 
-            modelo.addRow(new Object[]{
-                ingreso.getCodigo(),
-                ingreso.getCodigoProducto(),
-                ingreso.getNombre_ingrediente(),
-                ingreso.getCantidad(),
-                ingreso.getVencimiento(),
-                ingreso.getIngreso()
-            });
+            lista_ingresos = i.ObtenerIngresosIngrediente(nombre_ingrediente);
+
+            for (Ingreso ingreso : lista_ingresos) {
+
+                modelo.addRow(new Object[]{
+                    ingreso.getCodigo(),
+                    ingreso.getCodigoProducto(),
+                    ingreso.getNombre_ingrediente(),
+                    ingreso.getCantidad(),
+                    ingreso.getVencimiento(),
+                    ingreso.getIngreso()
+                });
+            }
+
+            int vencidos = i.Conteo_FIngresos(lista_ingresos);
+            int conteo = i.contar_ingresos(lista_ingresos);
+            txtvencidos.setText("" + vencidos + "");
+            txtrealizados.setText("" + conteo + "");
+
+        } else if (nombre_ingrediente.equals("Seleccionar") && (!diaSeleccionado.equals("Selecciona") && !mesSeleccionado.equals("Seleccionar") && !añoSeleccionado.equals("Seleccionar"))) {
+
+            int mesNumero = obtenerNumeroMes(mesSeleccionado);
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, Integer.parseInt(añoSeleccionado));
+            cal.set(Calendar.MONTH, mesNumero);
+            cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaSeleccionado));
+
+            Date fecha = new Date(cal.getTimeInMillis());
+
+            lista_ingresos = i.ObtenerIngresosFecha(fecha);
+
+            for (Ingreso ingreso : lista_ingresos) {
+
+                modelo.addRow(new Object[]{
+                    ingreso.getCodigo(),
+                    ingreso.getCodigoProducto(),
+                    ingreso.getNombre_ingrediente(),
+                    ingreso.getCantidad(),
+                    ingreso.getVencimiento(),
+                    ingreso.getIngreso()
+                });
+            }
+            int vencidos = i.Conteo_FIngresos(lista_ingresos);
+            int conteo = i.contar_ingresos(lista_ingresos);
+            txtvencidos.setText("" + vencidos + "");
+            txtrealizados.setText("" + conteo + "");
+        } else if (!nombre_ingrediente.equals("Seleccionar") && !diaSeleccionado.equals("Seleccionar") && !mesSeleccionado.equals("Seleccionar") && !añoSeleccionado.equals("Seleccionar")) {
+
+            int mesNumero = obtenerNumeroMes(mesSeleccionado);
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, Integer.parseInt(añoSeleccionado));
+            cal.set(Calendar.MONTH, mesNumero);
+            cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaSeleccionado));
+
+            Date fecha = new Date(cal.getTimeInMillis());
+
+            lista_ingresos = i.ObtenerIngresosFechaIngrediente(fecha, nombre_ingrediente);
+
+            for (Ingreso ingreso : lista_ingresos) {
+
+                modelo.addRow(new Object[]{
+                    ingreso.getCodigo(),
+                    ingreso.getCodigoProducto(),
+                    ingreso.getNombre_ingrediente(),
+                    ingreso.getCantidad(),
+                    ingreso.getVencimiento(),
+                    ingreso.getIngreso()
+                });
+            }
+
+            int vencidos = i.Conteo_FIngresos(lista_ingresos);
+            int conteo = i.contar_ingresos(lista_ingresos);
+            txtvencidos.setText("" + vencidos + "");
+            txtrealizados.setText("" + conteo + "");
         }
-        
-        int vencidos = i.Conteo_FIngresos(lista_ingresos);
-        int conteo = i.contar_ingresos(lista_ingresos);
-        txtvencidos.setText(""+vencidos+"");
-        txtrealizados.setText(""+conteo+"");
-        
-    } else if (nombre_ingrediente.equals("Seleccionar") && (!diaSeleccionado.equals("Selecciona") && !mesSeleccionado.equals("Seleccionar") && !añoSeleccionado.equals("Seleccionar"))) {
-        
-        int mesNumero = obtenerNumeroMes(mesSeleccionado);
-        
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, Integer.parseInt(añoSeleccionado));
-        cal.set(Calendar.MONTH, mesNumero);
-        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaSeleccionado));
-        
-        Date fecha = new Date(cal.getTimeInMillis());
-
-        lista_ingresos = i.ObtenerIngresosFecha(fecha);
-        
-       for (Ingreso ingreso : lista_ingresos) {
-           
-        
-            modelo.addRow(new Object[]{
-                ingreso.getCodigo(),
-                ingreso.getCodigoProducto(),
-                ingreso.getNombre_ingrediente(),
-                ingreso.getCantidad(),
-                ingreso.getVencimiento(),
-                ingreso.getIngreso()
-            });
-        } 
-        int vencidos = i.Conteo_FIngresos(lista_ingresos);
-        int conteo = i.contar_ingresos(lista_ingresos);
-        txtvencidos.setText(""+vencidos+"");
-        txtrealizados.setText(""+conteo+"");
-    } else if (!nombre_ingrediente.equals("Seleccionar") && !diaSeleccionado.equals("Seleccionar") && !mesSeleccionado.equals("Seleccionar") && !añoSeleccionado.equals("Seleccionar")) {
-        
-        int mesNumero = obtenerNumeroMes(mesSeleccionado);
-        
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, Integer.parseInt(añoSeleccionado));
-        cal.set(Calendar.MONTH, mesNumero);
-        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaSeleccionado));
-        
-        Date fecha = new Date(cal.getTimeInMillis());
-
-        lista_ingresos = i.ObtenerIngresosFechaIngrediente(fecha, nombre_ingrediente);
-        
-       for (Ingreso ingreso : lista_ingresos) {
-           
-        
-            modelo.addRow(new Object[]{
-                ingreso.getCodigo(),
-                ingreso.getCodigoProducto(),
-                ingreso.getNombre_ingrediente(),
-                ingreso.getCantidad(),
-                ingreso.getVencimiento(),
-                ingreso.getIngreso()
-            });
-        } 
-        int vencidos = i.Conteo_FIngresos(lista_ingresos);
-        int conteo = i.contar_ingresos(lista_ingresos);
-        txtvencidos.setText(""+vencidos+"");
-        txtrealizados.setText(""+conteo+"");
-    }
+        lista=(List<Ingreso>)lista_ingresos;
     }//GEN-LAST:event_generarActionPerformed
 
     private void cbxañoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxañoActionPerformed
-      txtrealizados.setText("");
-      txtvencidos.setText("");
+        txtrealizados.setText("");
+        txtvencidos.setText("");
     }//GEN-LAST:event_cbxañoActionPerformed
 
     private void cbxmesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxmesesActionPerformed
-      txtrealizados.setText("");
-      txtvencidos.setText("");
+        txtrealizados.setText("");
+        txtvencidos.setText("");
     }//GEN-LAST:event_cbxmesesActionPerformed
 
     private void cbxdiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxdiasActionPerformed
-              txtrealizados.setText("");
-      txtvencidos.setText("");
+        txtrealizados.setText("");
+        txtvencidos.setText("");
     }//GEN-LAST:event_cbxdiasActionPerformed
+
+    private void exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarActionPerformed
+        Plantilla plantilla = new Plantilla(titulo, getFecha());
+        plantilla.crearPlantillaIngreso("listaDeIngresos" + cont, lista,Integer.parseInt(txtvencidos.getText()),Integer.parseInt(txtrealizados.getText()));
+        cont++;
+    }//GEN-LAST:event_exportarActionPerformed
 
     private int obtenerNumeroMes(String mes) {
         switch (mes) {
-            case "Enero": return Calendar.JANUARY;
-            case "Febrero": return Calendar.FEBRUARY;
-            case "Marzo": return Calendar.MARCH;
-            case "Abril": return Calendar.APRIL;
-            case "Mayo": return Calendar.MAY;
-            case "Junio": return Calendar.JUNE;
-            case "Julio": return Calendar.JULY;
-            case "Agosto": return Calendar.AUGUST;
-            case "Septiembre": return Calendar.SEPTEMBER;
-            case "Octubre": return Calendar.OCTOBER;
-            case "Noviembre": return Calendar.NOVEMBER;
-            case "Diciembre": return Calendar.DECEMBER;
-            default: return -1; // Mes inválido
+            case "Enero":
+                return Calendar.JANUARY;
+            case "Febrero":
+                return Calendar.FEBRUARY;
+            case "Marzo":
+                return Calendar.MARCH;
+            case "Abril":
+                return Calendar.APRIL;
+            case "Mayo":
+                return Calendar.MAY;
+            case "Junio":
+                return Calendar.JUNE;
+            case "Julio":
+                return Calendar.JULY;
+            case "Agosto":
+                return Calendar.AUGUST;
+            case "Septiembre":
+                return Calendar.SEPTEMBER;
+            case "Octubre":
+                return Calendar.OCTOBER;
+            case "Noviembre":
+                return Calendar.NOVEMBER;
+            case "Diciembre":
+                return Calendar.DECEMBER;
+            default:
+                return -1; // Mes inválido
         }
     }
 
-    
+    public String getFecha() {
+        GregorianCalendar gcal = new GregorianCalendar();
+        int d = gcal.get(Calendar.DAY_OF_MONTH);
+        int m = gcal.get(Calendar.MONTH);
+        int y = gcal.get(Calendar.YEAR);
+        int h = gcal.get(Calendar.HOUR_OF_DAY);
+        int min = gcal.get(Calendar.MINUTE);
+        m+=1;
+        String mo;
+        String di;
+        String ho;
+        String minu;
+        if (m<10) {
+            mo="0"+m;
+        } else {
+            mo= String.valueOf(m);
+        }
+        if (d<10) {
+            di="0"+d;
+        } else {
+            di= String.valueOf(d);
+        }
+        if (h<10) {
+            ho="0"+h;
+        } else {
+            ho= String.valueOf(h);
+        }
+        if (min<10) {
+            minu="0"+min;
+        } else {
+            minu= String.valueOf(min);
+        }
+        return di + "/" + mo + "/" + y + " - " + ho + ":" + minu;
+    }
+
     /**
      * @param args the command line arguments
      */

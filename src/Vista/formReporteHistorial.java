@@ -3,12 +3,18 @@ package Vista;
 import Controlador.C_Receta;
 import Controlador.C_Ventas;
 import Modelo.HistorialReceta;
+import Modelo.Plantilla;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class formReporteHistorial extends javax.swing.JFrame {
 
     C_Receta c_Receta = new C_Receta();
+    String titulo = "Reporte de Historial";
+    int cont = 1;
+    List<HistorialReceta> lista;
     
     public formReporteHistorial() {
         initComponents();
@@ -18,13 +24,14 @@ public class formReporteHistorial extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPanelHistorial = new javax.swing.JScrollPane();
         tableHistorial = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        btnExp = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -38,23 +45,48 @@ public class formReporteHistorial extends javax.swing.JFrame {
         setBackground(new java.awt.Color(139, 120, 162));
         setPreferredSize(new java.awt.Dimension(1000, 850));
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 850));
 
         tableHistorial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tableHistorial.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tableHistorial.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "CODIGO", "NOMBRE", "FECHA"
             }
         ));
         jScrollPanelHistorial.setViewportView(tableHistorial);
+
+        jPanel5.setBackground(new java.awt.Color(139, 120, 162));
+
+        btnExp.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        btnExp.setText("Exportar");
+        btnExp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExpActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(403, 403, 403)
+                .addComponent(btnExp, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addComponent(btnExp)
+                .addGap(42, 42, 42))
+        );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -62,46 +94,49 @@ public class formReporteHistorial extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPanelHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPanelHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPanelHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPanelHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Reporte Historial");
 
+        jPanel4.setBackground(new java.awt.Color(139, 120, 162));
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 32)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Fecha de retiro:");
 
         inputFecha.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
 
         btnBuscarFecha.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         btnBuscarFecha.setText("Buscar");
-        btnBuscarFecha.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnBuscarFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarFechaActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 32)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Código de receta:");
 
         inputCodReceta.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
 
         btnBuscarCodigo.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         btnBuscarCodigo.setText("Buscar");
-        btnBuscarCodigo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnBuscarCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarCodigoActionPerformed(evt);
             }
         });
@@ -131,15 +166,17 @@ public class formReporteHistorial extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(71, 71, 71)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscarFecha)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscarFecha)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscarCodigo)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputCodReceta, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscarCodigo)
+                        .addComponent(jLabel3)))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
 
@@ -177,7 +214,7 @@ public class formReporteHistorial extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
         );
 
         pack();
@@ -187,16 +224,22 @@ public class formReporteHistorial extends javax.swing.JFrame {
     private void btnBuscarFechaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBuscarFechaActionPerformed
     {//GEN-HEADEREND:event_btnBuscarFechaActionPerformed
         // TODO add your handling code here:
-        List<HistorialReceta> lista = c_Receta.buscarHistorialReceta(inputFecha.getText().trim(), "");
+        lista = c_Receta.buscarHistorialReceta(inputFecha.getText().trim(), "");
         actualizarTablaPreparaciones(lista);
     }//GEN-LAST:event_btnBuscarFechaActionPerformed
 
     private void btnBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBuscarCodigoActionPerformed
     {//GEN-HEADEREND:event_btnBuscarCodigoActionPerformed
         // TODO add your handling code here:
-        List<HistorialReceta> lista = c_Receta.buscarHistorialReceta("", inputCodReceta.getText().trim());
+        lista = c_Receta.buscarHistorialReceta("", inputCodReceta.getText().trim());
         actualizarTablaPreparaciones(lista);
     }//GEN-LAST:event_btnBuscarCodigoActionPerformed
+
+    private void btnExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpActionPerformed
+        Plantilla plantilla = new Plantilla(titulo, getFecha());
+        plantilla.crearPlantillaHistorial("listaDeHistorial" + cont, lista);
+        cont++;
+    }//GEN-LAST:event_btnExpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,9 +297,45 @@ public class formReporteHistorial extends javax.swing.JFrame {
         tableHistorial.setModel(model);
     }
     
+    public String getFecha() {
+        GregorianCalendar gcal = new GregorianCalendar();
+        int d = gcal.get(Calendar.DAY_OF_MONTH);
+        int m = gcal.get(Calendar.MONTH);
+        int y = gcal.get(Calendar.YEAR);
+        int h = gcal.get(Calendar.HOUR_OF_DAY);
+        int min = gcal.get(Calendar.MINUTE);
+        m+=1;
+        String mo;
+        String di;
+        String ho;
+        String minu;
+        if (m<10) {
+            mo="0"+m;
+        } else {
+            mo= String.valueOf(m);
+        }
+        if (d<10) {
+            di="0"+d;
+        } else {
+            di= String.valueOf(d);
+        }
+        if (h<10) {
+            ho="0"+h;
+        } else {
+            ho= String.valueOf(h);
+        }
+        if (min<10) {
+            minu="0"+min;
+        } else {
+            minu= String.valueOf(min);
+        }
+        return di + "/" + mo + "/" + y + " - " + ho + ":" + minu;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCodigo;
     private javax.swing.JButton btnBuscarFecha;
+    private javax.swing.JButton btnExp;
     private javax.swing.JTextField inputCodReceta;
     private javax.swing.JTextField inputFecha;
     private javax.swing.JLabel jLabel1;
@@ -265,6 +344,7 @@ public class formReporteHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPanelHistorial;
     private javax.swing.JTable tableHistorial;
     // End of variables declaration//GEN-END:variables

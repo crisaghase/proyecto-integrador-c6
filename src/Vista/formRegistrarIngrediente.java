@@ -37,6 +37,8 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         cbxProveedor = new javax.swing.JComboBox<>();
         cbxTiempo = new javax.swing.JComboBox<>();
+        txtstk = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,7 +63,7 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Categoría :");
+        jLabel13.setText("Stock Min:");
 
         cbxCategoria.setEditable(true);
         cbxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -80,39 +82,53 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
         cbxTiempo.setEditable(true);
         cbxTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Mes" }));
 
+        txtstk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtstkActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Categoría :");
+
         javax.swing.GroupLayout jPanelVentanaAgregarProductoLayout = new javax.swing.GroupLayout(jPanelVentanaAgregarProducto);
         jPanelVentanaAgregarProducto.setLayout(jPanelVentanaAgregarProductoLayout);
         jPanelVentanaAgregarProductoLayout.setHorizontalGroup(
             jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVentanaAgregarProductoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgregarProductoSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
             .addGroup(jPanelVentanaAgregarProductoLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
-                .addGroup(jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanelVentanaAgregarProductoLayout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtstk, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelVentanaAgregarProductoLayout.createSequentialGroup()
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(cbxProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelVentanaAgregarProductoLayout.createSequentialGroup()
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelVentanaAgregarProductoLayout.createSequentialGroup()
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(cbxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVentanaAgregarProductoLayout.createSequentialGroup()
+                    .addGroup(jPanelVentanaAgregarProductoLayout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelVentanaAgregarProductoLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelVentanaAgregarProductoLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelVentanaAgregarProductoLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelVentanaAgregarProductoLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(jLabel4)))
                 .addContainerGap(68, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVentanaAgregarProductoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAgregarProductoSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
         );
         jPanelVentanaAgregarProductoLayout.setVerticalGroup(
             jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,9 +142,10 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
                 .addGroup(jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelVentanaAgregarProductoLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -139,9 +156,13 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
                     .addComponent(cbxTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelVentanaAgregarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtstk, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
                 .addComponent(btnAgregarProductoSQL)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,7 +178,7 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
+            .addGap(0, 384, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -173,6 +194,10 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
         // TODO add your handling code here:
         agregarIngrediente();
     }//GEN-LAST:event_btnAgregarProductoSQLActionPerformed
+
+    private void txtstkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtstkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,13 +239,13 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
     private void agregarIngrediente() {
         Ingrediente ingre = new Ingrediente();
         C_Ingrediente c_ingre = new C_Ingrediente();
-        if (txtNombre.getText().equals("") || txtNombre.getText().equals("") || txtTiempo.getText().equals("")) {
+        if (txtNombre.getText().equals("") || txtNombre.getText().equals("") || txtTiempo.getText().equals("")||txtstk.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe completar todos los campos.");
         } else {
             ingre.setNombre(txtNombre.getText());
             ingre.setCodCategoria(obtenerCodigoCategoria());
-            //falta obtener codigo proveedor 
             ingre.setCodProveedor(obtenerCodigoProveedor());
+            ingre.setStock_min(Integer.parseInt(txtstk.getText()) );
 
             if (cbxTiempo.getSelectedIndex() == 1) {
                 int n = Integer.parseInt(txtTiempo.getText()) * 30;
@@ -315,9 +340,11 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
     private void reiniciarCamposRegistro() {
         txtNombre.setText(null);
         txtTiempo.setText(null);
+        txtstk.setText(null);
         cbxCategoria.setSelectedIndex(0);
         cbxProveedor.setSelectedIndex(0);
         cbxTiempo.setSelectedIndex(0);
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -327,11 +354,13 @@ public class formRegistrarIngrediente extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxTiempo;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanelVentanaAgregarProducto;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTiempo;
+    private javax.swing.JTextField txtstk;
     // End of variables declaration//GEN-END:variables
 }
