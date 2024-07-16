@@ -261,7 +261,10 @@ public class formLogin extends javax.swing.JFrame {
             if (userController.loginUser(user)) {
                 JOptionPane.showMessageDialog(null,"Sesión iniciada");
                 formMenuPrincipal menu = new formMenuPrincipal();
+                Notificaciones noti = new Notificaciones();
+                
                 menu.setVisible(true);
+                noti.setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null,"Usuario o ID incorrecto");
