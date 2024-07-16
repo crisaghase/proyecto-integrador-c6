@@ -1,6 +1,5 @@
 package Controlador;
 
-import Modelo.CategoriaProducto;
 import Modelo.Ingrediente;
 import java.sql.Connection;
 import java.sql.Date;

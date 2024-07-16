@@ -1,68 +1,56 @@
 package Modelo;
 
+import java.sql.Date;
+
 public class Ingreso {
-    private String codigo;
+   private String codigo;
     private String codigoProducto;
     private int cantidad;
-    private int diaIngreso;
-    private int mesIngreso;
-    private int anioIngreso;
-    private int diaVencimiento;
-    private int mesVencimiento;
-    private int anioVencimiento;
-
-    public Ingreso(String codigo, String codigoProducto, int cantidad) {
+    private Date ingreso;
+    private Date vencimiento;
+    private String nombre_ingrediente; 
+    
+    public Ingreso(String codigo, String codigoProducto, int cantidad, Date ingreso, Date vencimiento) {
         this.codigo = codigo;
         this.codigoProducto = codigoProducto;
         this.cantidad = cantidad;
+        this.ingreso = ingreso;
+        this.vencimiento = vencimiento;
     }
 
-    public int getAnioVencimiento() {
-        return anioVencimiento;
+    public Ingreso(String codigo, String codigoProducto, int cantidad, Date ingreso, Date vencimiento, String nombre_ingrediente) {
+        this.codigo = codigo;
+        this.codigoProducto = codigoProducto;
+        this.cantidad = cantidad;
+        this.ingreso = ingreso;
+        this.vencimiento = vencimiento;
+        this.nombre_ingrediente = nombre_ingrediente;
+    }
+    
+    
+
+    public String getNombre_ingrediente() {
+        return nombre_ingrediente;
     }
 
-    public void setAnioVencimiento(int anioVencimiento) {
-        this.anioVencimiento = anioVencimiento;
+    public void setNombre_ingrediente(String nombre_ingrediente) {
+        this.nombre_ingrediente = nombre_ingrediente;
+    }
+    
+    public Date getVencimiento() {
+        return vencimiento;
     }
 
-    public int getDiaIngreso() {
-        return diaIngreso;
+    public void setVencimiento(Date vencimiento) {
+        this.vencimiento = vencimiento;
     }
 
-    public void setDiaIngreso(int diaIngreso) {
-        this.diaIngreso = diaIngreso;
+    public Date getIngreso() {
+        return ingreso;
     }
 
-    public int getMesIngreso() {
-        return mesIngreso;
-    }
-
-    public void setMesIngreso(int mesIngreso) {
-        this.mesIngreso = mesIngreso;
-    }
-
-    public int getAnioIngreso() {
-        return anioIngreso;
-    }
-
-    public void setAnioIngreso(int anioIngreso) {
-        this.anioIngreso = anioIngreso;
-    }
-
-    public int getDiaVencimiento() {
-        return diaVencimiento;
-    }
-
-    public void setDiaVencimiento(int diaVencimiento) {
-        this.diaVencimiento = diaVencimiento;
-    }
-
-    public int getMesVencimiento() {
-        return mesVencimiento;
-    }
-
-    public void setMesVencimiento(int mesVencimiento) {
-        this.mesVencimiento = mesVencimiento;
+    public void setIngreso(Date ingreso) {
+        this.ingreso = ingreso;
     }
 
     public String getCodigo() {
@@ -87,13 +75,6 @@ public class Ingreso {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-    
-    public String fechaIngreso(){
-        return diaIngreso+"/"+mesIngreso+"/"+anioIngreso;
-    }
-    public String fechaVencimiento(){
-        return diaVencimiento+"/"+mesVencimiento+"/"+anioVencimiento;
     }
     
 }

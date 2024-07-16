@@ -4,18 +4,49 @@
  */
 package Vista;
 
+import Controlador.C_Ingreso;
+import Controlador.Conexion;
+import Modelo.Ingreso;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gianny
  */
 public class formRegistrarIngreso extends javax.swing.JFrame {
-
-    /**
-     * Creates new form formRegistrarIngreso
-     */
+    
+    C_Ingreso ingresos =  new C_Ingreso();
+    Connection c = Conexion.Conectar();
+    
     public formRegistrarIngreso() {
         initComponents();
+        this.setLocation(500, 50);
+        PRODUCTOS();
     }
+    
+    private void PRODUCTOS() {
+        String query = "SELECT nombre FROM Ingrediente"; 
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                cbxproductos.addItem(nombre);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cargar los ingresos en el JComboBox: " + e.getMessage());
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,110 +59,205 @@ public class formRegistrarIngreso extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        cbxProveedor = new javax.swing.JComboBox<>();
+        cbxproductos = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        txtProducto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtCantidadProducto = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtImporte = new javax.swing.JTextField();
+        txtcantidadingreso = new javax.swing.JTextField();
+        registrar_ingreso = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(139, 120, 162));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Ingreso");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel2.setText("Proveedor:");
+        cbxproductos.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cbxproductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxproductosActionPerformed(evt);
+            }
+        });
 
-        cbxProveedor.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cbxProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Ingrediente:");
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel3.setText("Producto:");
-
-        txtProducto.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Cantidad:");
 
-        txtCantidadProducto.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtcantidadingreso.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel5.setText("Importe:");
-
-        txtImporte.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        registrar_ingreso.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        registrar_ingreso.setText("Registrar");
+        registrar_ingreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrar_ingresoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(registrar_ingreso)
+                .addGap(150, 150, 150))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 154, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(0, 144, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbxProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtImporte)
-                            .addComponent(txtCantidadProducto))))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(23, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtcantidadingreso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxproductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxproductos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(txtcantidadingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(registrar_ingreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbxproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxproductosActionPerformed
+        
+    }//GEN-LAST:event_cbxproductosActionPerformed
+
+    private void registrar_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrar_ingresoActionPerformed
+       registrar ();
+    }//GEN-LAST:event_registrar_ingresoActionPerformed
+    
+    
+     private void registrar() {
+        if (cbxproductos.getSelectedItem() != null && !txtcantidadingreso.getText().equals("")) {
+            try {
+                String nombreProducto = cbxproductos.getSelectedItem().toString();
+                String codigoProducto = obtenerCodigoProducto(nombreProducto);
+                int vencimientoDias = obtenerVencimientoDias(codigoProducto);
+                String codigoIngreso = generarCodigoIngreso();
+                int cantidad = Integer.parseInt(txtcantidadingreso.getText());
+
+                LocalDate fechaIngreso = LocalDate.now();
+                LocalDate fechaVencimiento = fechaIngreso.plus(vencimientoDias, ChronoUnit.DAYS);
+
+                Ingreso ingreso = new Ingreso(codigoIngreso, codigoProducto, cantidad, Date.valueOf(fechaIngreso), Date.valueOf(fechaVencimiento));
+
+                if (ingresos.agregarIngreso(ingreso)) {
+                    JOptionPane.showMessageDialog(this, "Ingreso registrado exitosamente.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al registrar el ingreso.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe llenar o seleccionar una opción en todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private String obtenerCodigoProducto(String nombreProducto) {
+        String codigoProducto = null;
+        String query = "SELECT codigo FROM Ingrediente WHERE nombre = '" + nombreProducto + "'";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                codigoProducto = rs.getString("codigo");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el código del producto: " + e.getMessage());
+            System.out.println(e.getMessage());
+        }
+        return codigoProducto;
+    }
+
+    private int obtenerVencimientoDias(String codigoProducto) {
+        int dias_vendimiento = 0;
+        String query = "SELECT vencimiento FROM Ingrediente WHERE codigo = '" + codigoProducto + "'";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                dias_vendimiento = rs.getInt("vencimiento");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el vencimiento del producto: " + e.getMessage());
+        }
+        return dias_vendimiento;
+    }
+    
+    private String generarCodigoIngreso() {
+        int count = 0;
+        String query = "SELECT COUNT(*) as total FROM Ingreso";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el conteo de ingresos: " + e.getMessage());
+        }
+
+        count++; 
+
+        String codigoIngreso;
+        if (count < 10) {
+            codigoIngreso = "INGR00" + count;
+        } else {
+            codigoIngreso = "INGR0" + count;
+        }
+
+        return codigoIngreso;
+    }
+    
+    
+
+
 
     /**
      * @param args the command line arguments
@@ -169,15 +295,12 @@ public class formRegistrarIngreso extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxProveedor;
+    private javax.swing.JComboBox<String> cbxproductos;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCantidadProducto;
-    private javax.swing.JTextField txtImporte;
-    private javax.swing.JTextField txtProducto;
+    private javax.swing.JButton registrar_ingreso;
+    private javax.swing.JTextField txtcantidadingreso;
     // End of variables declaration//GEN-END:variables
 }
